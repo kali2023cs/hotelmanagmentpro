@@ -63,3 +63,6 @@ Route::get('/getRoomsByType/{roomTypeId}', [CheckinController::class, 'getRoomsB
 Route::get('/getRoomTypePlan/{roomTypeId}', [CheckinController::class, 'getRoomTypePlan']);
 
 Route::post('/checkinConfirm', [CheckinController::class, 'checkinConfirm']);
+Route::get('/checkinList', [CheckinController::class, 'checkinList']);
+Route::get('/checkin/{checkinid}', [CheckinController::class, 'checkin']);
+Route::put('/editcheckin/{checkinId}', [CheckinController::class, 'editCheckin']);
