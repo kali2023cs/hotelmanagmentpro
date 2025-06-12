@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CheckinController;
+use App\Http\Controllers\RoommenuController;
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -46,6 +47,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/roommaster/{id}', [MasterController::class, 'editroommaster']);
     Route::delete('/roommaster/{id}', [MasterController::class, 'deleteroommaster']);
 
+     Route::get('/retriveRoomMasterForBlock', [RoommenuController::class, 'retriveRoomMasterForBlock']);
+     Route::post('/blockRoom', [RoommenuController::class, 'blockRoom']);
 
     // Logout
     Route::post('/logout', [AuthController::class, 'logout']);
