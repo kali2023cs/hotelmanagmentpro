@@ -31,4 +31,14 @@ class CheckinRoomTrans extends Model
     {
         return $this->belongsTo(CheckinMaster::class, 'checkin_id');
     }
+
+    public function roomType()
+    {
+        return $this->belongsTo(RoomTypeMaster::class, 'room_type_id');
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(RoomMaster::class, 'room_id');
+    }
 }

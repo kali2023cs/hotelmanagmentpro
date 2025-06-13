@@ -72,4 +72,57 @@ class RoommenuController extends Controller
         ]);
     }
 
+    public function retriveBlockedRooms()
+    {
+        $blockedStatusId = RoomStatusMaster::where(DB::raw('UPPER(status_name)'), 'BLOCKED')->pluck('id')->first();
+
+        if (!$blockedStatusId) {
+            return response()->json([
+                'status' => false,
+                'message' => 'BLOCKED status not found'
+            ], 500);
+        }
+
+        $rooms = RoomMaster::where('status_id', $blockedStatusId)->get();
+
+        return response()->json([
+            'status' => true,
+            'data' => $rooms
+        ]);
+    }
+
+    public function unblockRoom(Request $request)
+    {
+        $room = RoomMaster::find($request->room_id);
+
+        if (!$room) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Room not found',
+            ], 404);
+        }
+
+        $dirtyStatusId = RoomStatusMaster::where(DB::raw('UPPER(status_name)'), 'DIRTY')->pluck('id')->first();
+
+        if (!$dirtyStatusId) {
+            return response()->json([
+                'status' => false,
+                'message' => 'DIRTY status not found',
+            ], 500);
+        }
+
+        // Optional: delete the block record or mark it inactive
+        BlockRoom::where('room_id', $room->id)
+            ->orderBy('id', 'desc')
+            ->take(1)
+            ->update(['status_id' => $dirtyStatusId]);
+
+        $room->update(['status_id' => $dirtyStatusId]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Room unblocked successfully',
+        ]);
+    }
+
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2025 at 02:31 PM
+-- Generation Time: Jun 13, 2025 at 02:58 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -85,6 +85,37 @@ INSERT INTO `block_master` (`id`, `block_no`, `block_name`, `created_by`, `updat
 (7, 'BLK-C', 'Block C', 2, 2, '2025-06-07 11:05:57', '2025-06-07 11:05:57', NULL),
 (8, 'TWR-1', 'Tower 1', 1, 2, '2025-06-07 11:05:57', '2025-06-07 11:05:57', NULL),
 (9, 'TWR-2', 'Tower 2', 3, 3, '2025-06-07 11:05:57', '2025-06-07 11:05:57', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `block_rooms`
+--
+
+CREATE TABLE `block_rooms` (
+  `id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `status_id` int(11) DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `fromdatetime` datetime NOT NULL,
+  `todatetime` datetime NOT NULL,
+  `blocked_by` int(11) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `block_rooms`
+--
+
+INSERT INTO `block_rooms` (`id`, `room_id`, `status_id`, `reason`, `fromdatetime`, `todatetime`, `blocked_by`, `timestamp`) VALUES
+(1, 1, 4, 'Tesing', '2025-06-11 18:30:00', '2025-06-12 18:30:00', 1, '2025-06-12 13:02:24'),
+(2, 3, 7, 'testing', '2025-06-11 18:30:00', '2025-06-12 18:30:00', 1, '2025-06-12 13:05:15'),
+(3, 5, 4, 'testing', '2025-06-12 18:30:00', '2025-06-13 18:30:00', 1, '2025-06-12 13:08:31'),
+(4, 6, 7, 'testing', '2025-06-12 18:30:00', '2025-06-13 18:30:00', 1, '2025-06-12 13:09:24'),
+(5, 7, 7, 'Tesing', '2025-06-12 18:30:00', '2025-06-18 18:30:00', 1, '2025-06-12 13:11:18'),
+(6, 9, 7, 'Tesing', '2025-06-19 18:30:00', '2025-06-18 18:30:00', 1, '2025-06-12 13:14:01'),
+(7, 10, 7, 'testing', '2025-06-11 18:30:00', '2025-06-13 18:30:00', 1, '2025-06-12 13:15:31'),
+(8, 11, 7, 'Tesing', '2025-06-11 18:30:00', '2025-06-12 18:30:00', 1, '2025-06-12 13:17:52');
 
 -- --------------------------------------------------------
 
@@ -232,6 +263,69 @@ INSERT INTO `checkin_room_trans` (`id`, `checkin_id`, `room_type_id`, `room_id`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `checkout_master`
+--
+
+CREATE TABLE `checkout_master` (
+  `id` int(11) NOT NULL,
+  `checkin_id` int(11) NOT NULL,
+  `actual_checkout_datetime` datetime NOT NULL,
+  `early_checkout` tinyint(1) DEFAULT 0,
+  `late_checkout` tinyint(1) DEFAULT 0,
+  `checkout_remarks` text DEFAULT NULL,
+  `payment_status` enum('Paid','Pending','Partially Paid') NOT NULL DEFAULT 'Pending',
+  `total_amount` decimal(12,2) NOT NULL,
+  `tax_amount` decimal(12,2) NOT NULL,
+  `discount_amount` decimal(12,2) DEFAULT 0.00,
+  `grand_total` decimal(12,2) NOT NULL,
+  `amount_paid` decimal(12,2) DEFAULT 0.00,
+  `balance_due` decimal(12,2) DEFAULT 0.00,
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `checkout_master`
+--
+
+INSERT INTO `checkout_master` (`id`, `checkin_id`, `actual_checkout_datetime`, `early_checkout`, `late_checkout`, `checkout_remarks`, `payment_status`, `total_amount`, `tax_amount`, `discount_amount`, `grand_total`, `amount_paid`, `balance_due`, `created_by`, `created_at`, `updated_at`) VALUES
+(1, 1, '2025-06-13 11:56:19', 0, 1, NULL, 'Partially Paid', 1678.00, 201.36, 0.00, 1879.36, 1699.36, 180.00, 1, '2025-06-13 06:29:00', '2025-06-13 06:29:00'),
+(2, 1, '2025-06-13 12:12:12', 0, 1, NULL, 'Paid', 1678.00, 201.36, 0.00, 1879.36, 3758.72, -1879.36, 1, '2025-06-13 06:43:03', '2025-06-13 06:43:04'),
+(4, 1, '2025-06-13 12:57:14', 0, 1, NULL, 'Paid', 1678.00, 201.36, 0.00, 1879.36, 1879.36, 0.00, 1, '2025-06-13 07:27:40', '2025-06-13 07:27:40');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `checkout_payments`
+--
+
+CREATE TABLE `checkout_payments` (
+  `id` int(11) NOT NULL,
+  `checkout_id` int(11) NOT NULL,
+  `payment_method` enum('Cash','Credit Card','Debit Card','UPI','Bank Transfer','Online Payment','Wallet') NOT NULL,
+  `payment_amount` decimal(12,2) NOT NULL,
+  `payment_date` datetime NOT NULL,
+  `transaction_reference` varchar(100) DEFAULT NULL,
+  `payment_notes` text DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `checkout_payments`
+--
+
+INSERT INTO `checkout_payments` (`id`, `checkout_id`, `payment_method`, `payment_amount`, `payment_date`, `transaction_reference`, `payment_notes`, `created_by`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Credit Card', 1699.36, '2025-06-13 11:59:00', 'PAY-1749815940', NULL, 1, '2025-06-13 06:29:00', '2025-06-13 06:29:00'),
+(2, 2, 'Cash', 1879.36, '2025-06-13 12:13:03', 'PAY-1749816783', NULL, 1, '2025-06-13 06:43:03', '2025-06-13 06:43:03'),
+(3, 2, 'Cash', 1879.36, '2025-06-13 12:13:03', NULL, NULL, 1, '2025-06-13 06:43:04', '2025-06-13 06:43:04'),
+(5, 4, 'Cash', 1879.36, '2025-06-13 12:57:40', 'PAY-1749819460', NULL, 1, '2025-06-13 07:27:40', '2025-06-13 07:27:40');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `city_master`
 --
 
@@ -369,6 +463,65 @@ INSERT INTO `gender_master` (`id`, `gender_code`, `gender_name`, `is_active`, `c
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `invoices`
+--
+
+CREATE TABLE `invoices` (
+  `id` int(11) NOT NULL,
+  `invoice_number` varchar(50) NOT NULL,
+  `checkout_id` int(11) NOT NULL,
+  `invoice_date` date NOT NULL,
+  `due_date` date NOT NULL,
+  `status` enum('Draft','Sent','Paid','Cancelled') NOT NULL DEFAULT 'Draft',
+  `notes` text DEFAULT NULL,
+  `terms` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `invoices`
+--
+
+INSERT INTO `invoices` (`id`, `invoice_number`, `checkout_id`, `invoice_date`, `due_date`, `status`, `notes`, `terms`, `created_at`, `updated_at`) VALUES
+(1, 'INV-1749815940', 1, '2025-06-13', '2025-06-20', 'Sent', NULL, 'Payment due within 7 days', '2025-06-13 06:29:00', '2025-06-13 06:29:00'),
+(2, 'INV-1749816783', 2, '2025-06-13', '2025-06-20', 'Paid', NULL, 'Payment due within 7 days', '2025-06-13 06:43:03', '2025-06-13 06:43:05'),
+(4, 'INV-1749819460', 4, '2025-06-13', '2025-06-20', 'Paid', NULL, 'Payment due within 7 days', '2025-06-13 07:27:40', '2025-06-13 07:27:40');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice_items`
+--
+
+CREATE TABLE `invoice_items` (
+  `id` int(11) NOT NULL,
+  `invoice_id` int(11) NOT NULL,
+  `item_type` enum('Room','Service','Tax','Discount','Other') NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `quantity` decimal(10,2) NOT NULL DEFAULT 1.00,
+  `unit_price` decimal(12,2) NOT NULL,
+  `tax_rate` decimal(5,2) DEFAULT 0.00,
+  `amount` decimal(12,2) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `invoice_items`
+--
+
+INSERT INTO `invoice_items` (`id`, `invoice_id`, `item_type`, `description`, `quantity`, `unit_price`, `tax_rate`, `amount`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Room', 'Room 505 - Standard Room', 1.00, 1100.00, 12.00, 978.00, '2025-06-13 06:29:00', '2025-06-13 06:29:00'),
+(2, 1, 'Room', 'Room 104 - Executive Room', 1.00, 700.00, 12.00, 700.00, '2025-06-13 06:29:00', '2025-06-13 06:29:00'),
+(3, 2, 'Room', 'Room 505 - Standard Room', 1.00, 1100.00, 12.00, 978.00, '2025-06-13 06:43:03', '2025-06-13 06:43:03'),
+(4, 2, 'Room', 'Room 104 - Executive Room', 1.00, 700.00, 12.00, 700.00, '2025-06-13 06:43:03', '2025-06-13 06:43:03'),
+(8, 4, 'Room', 'Room 505 - Standard Room', 1.00, 1100.00, 12.00, 978.00, '2025-06-13 07:27:40', '2025-06-13 07:27:40'),
+(9, 4, 'Room', 'Room 104 - Executive Room', 1.00, 700.00, 12.00, 700.00, '2025-06-13 07:27:40', '2025-06-13 07:27:40');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `jobs`
 --
 
@@ -465,7 +618,9 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 (27, 'App\\Models\\User', 1, 'authToken', 'c05b29c2b4445535f159b68c4de580238c96bf8085a282374f143151653f8fd4', '[\"*\"]', '2025-06-07 05:20:39', NULL, '2025-06-07 05:19:56', '2025-06-07 05:20:39'),
 (28, 'App\\Models\\User', 1, 'authToken', 'd69237ece7ddb47ce1572b4eaef7e4f9af7e09ae5c39ababc9280baf9fa39084', '[\"*\"]', NULL, NULL, '2025-06-07 05:20:54', '2025-06-07 05:20:54'),
 (29, 'App\\Models\\User', 1, 'authToken', 'b62eac3e22fff3188615c968a1917b19ad6a9087ec28d2bd8370b3dc885185cc', '[\"*\"]', NULL, NULL, '2025-06-07 05:20:56', '2025-06-07 05:20:56'),
-(31, 'App\\Models\\User', 1, 'authToken', '64905b4d3b0ec5f791754157992bfaa4b6501bc4da8296f0e8204c1407440899', '[\"*\"]', '2025-06-09 07:44:18', NULL, '2025-06-07 06:49:43', '2025-06-09 07:44:18');
+(31, 'App\\Models\\User', 1, 'authToken', '64905b4d3b0ec5f791754157992bfaa4b6501bc4da8296f0e8204c1407440899', '[\"*\"]', '2025-06-09 07:44:18', NULL, '2025-06-07 06:49:43', '2025-06-09 07:44:18'),
+(37, 'App\\Models\\User', 1, 'authToken', 'd89fa79fc868f14955acc49a2c718f020175fea52b0457a4a6f294d5878ab157', '[\"*\"]', NULL, NULL, '2025-06-11 23:14:47', '2025-06-11 23:14:47'),
+(39, 'App\\Models\\User', 1, 'authToken', 'dea883144134d67fad2dddb81f5b408b78daefd5822f0fd2d09c0144a4f4840a', '[\"*\"]', '2025-06-13 07:27:43', NULL, '2025-06-12 05:54:06', '2025-06-13 07:27:43');
 
 -- --------------------------------------------------------
 
@@ -607,17 +762,17 @@ CREATE TABLE `room_master` (
 --
 
 INSERT INTO `room_master` (`id`, `room_no`, `display_order`, `floor_id`, `room_type_id`, `max_pax`, `max_extra_pax`, `status_id`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, '501', 1, 5, 3, 2, 1, 1, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
+(1, '501', 1, 5, 3, 2, 1, 4, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-13 03:33:05', NULL),
 (2, '502', 2, 5, 4, 2, 1, 2, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-10 06:21:43', NULL),
-(3, '503', 3, 5, 5, 3, 2, 1, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
+(3, '503', 3, 5, 5, 3, 2, 7, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-12 07:35:15', NULL),
 (4, '504', 4, 5, 6, 3, 2, 2, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
-(5, '505', 5, 5, 3, 2, 1, 1, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
-(6, '506', 6, 5, 4, 2, 1, 1, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
-(7, '507', 7, 5, 5, 3, 2, 1, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
+(5, '505', 5, 5, 3, 2, 1, 1, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-13 07:27:40', NULL),
+(6, '506', 6, 5, 4, 2, 1, 7, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-12 07:39:24', NULL),
+(7, '507', 7, 5, 5, 3, 2, 7, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-12 07:41:18', NULL),
 (8, '508', 8, 5, 6, 3, 2, 2, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
-(9, '509', 9, 5, 3, 2, 1, 1, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
-(10, '510', 10, 5, 4, 2, 1, 1, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
-(11, '601', 11, 6, 5, 3, 2, 1, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
+(9, '509', 9, 5, 3, 2, 1, 7, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-12 07:44:01', NULL),
+(10, '510', 10, 5, 4, 2, 1, 7, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-12 07:45:31', NULL),
+(11, '601', 11, 6, 5, 3, 2, 7, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-12 07:47:52', NULL),
 (12, '602', 12, 6, 6, 3, 2, 2, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
 (13, '603', 13, 6, 3, 2, 1, 3, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:50:00', NULL),
 (14, '604', 14, 6, 4, 2, 1, 1, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
@@ -629,7 +784,7 @@ INSERT INTO `room_master` (`id`, `room_no`, `display_order`, `floor_id`, `room_t
 (20, '610', 20, 6, 6, 3, 2, 2, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
 (21, '101', 1, 6, 5, 1, 1, 4, 1, 1, 1, NULL, '2025-06-07 06:39:35', '2025-06-07 06:39:35', NULL),
 (22, '102', 2, 5, 4, 2, 1, 5, 1, 1, 1, NULL, '2025-06-07 06:39:56', '2025-06-07 06:39:56', NULL),
-(23, '104', 3, 6, 6, 2, 1, 6, 1, 1, 1, NULL, '2025-06-07 06:40:13', '2025-06-07 06:40:13', NULL),
+(23, '104', 3, 6, 6, 2, 1, 1, 1, 1, 1, NULL, '2025-06-07 06:40:13', '2025-06-13 07:27:40', NULL),
 (24, '106', 1, 6, 4, 1, 2, 7, 1, 1, 1, NULL, '2025-06-07 06:40:37', '2025-06-07 06:40:37', NULL);
 
 -- --------------------------------------------------------
@@ -783,6 +938,12 @@ ALTER TABLE `block_master`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `block_rooms`
+--
+ALTER TABLE `block_rooms`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `business_source`
 --
 ALTER TABLE `business_source`
@@ -812,6 +973,20 @@ ALTER TABLE `checkin_master`
 ALTER TABLE `checkin_room_trans`
   ADD PRIMARY KEY (`id`),
   ADD KEY `checkin_id` (`checkin_id`);
+
+--
+-- Indexes for table `checkout_master`
+--
+ALTER TABLE `checkout_master`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `checkin_id` (`checkin_id`);
+
+--
+-- Indexes for table `checkout_payments`
+--
+ALTER TABLE `checkout_payments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `checkout_id` (`checkout_id`);
 
 --
 -- Indexes for table `city_master`
@@ -847,6 +1022,21 @@ ALTER TABLE `floor_master`
 ALTER TABLE `gender_master`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `gender_code` (`gender_code`);
+
+--
+-- Indexes for table `invoices`
+--
+ALTER TABLE `invoices`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `invoice_number` (`invoice_number`),
+  ADD KEY `checkout_id` (`checkout_id`);
+
+--
+-- Indexes for table `invoice_items`
+--
+ALTER TABLE `invoice_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `invoice_id` (`invoice_id`);
 
 --
 -- Indexes for table `jobs`
@@ -960,6 +1150,12 @@ ALTER TABLE `block_master`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `block_rooms`
+--
+ALTER TABLE `block_rooms`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `business_source`
 --
 ALTER TABLE `business_source`
@@ -976,6 +1172,18 @@ ALTER TABLE `checkin_master`
 --
 ALTER TABLE `checkin_room_trans`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `checkout_master`
+--
+ALTER TABLE `checkout_master`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `checkout_payments`
+--
+ALTER TABLE `checkout_payments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `city_master`
@@ -1008,6 +1216,18 @@ ALTER TABLE `gender_master`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `invoices`
+--
+ALTER TABLE `invoices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `invoice_items`
+--
+ALTER TABLE `invoice_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
@@ -1023,7 +1243,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `plans`
