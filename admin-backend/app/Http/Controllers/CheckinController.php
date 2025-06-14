@@ -180,6 +180,8 @@ class CheckinController extends Controller
                     'total' => $room['total'] ?? 0,
                 ]);
 
+                \App\Models\RoomMaster::where('id', $room['roomId'])->update(['checkin_id' => $checkin->id]);
+
                 // ✅ Update room status to '2' (Occupied)
                 \App\Models\RoomMaster::where('id', $room['roomId'])->update(['status_id' => 2]);
             }

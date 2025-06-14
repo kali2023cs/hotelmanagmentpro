@@ -19,6 +19,7 @@ class RoomMaster extends Model
         'max_pax',
         'max_extra_pax',
         'status_id',
+        'checkin_id',
         'is_active',
         'created_by',
         'updated_by',

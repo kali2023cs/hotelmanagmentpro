@@ -56,6 +56,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Checkout routes
     Route::post('/checkout', [CheckoutController::class, 'processCheckout']);
     Route::get('/checkout/{checkoutId}', [CheckoutController::class, 'getCheckoutDetails']);
+    Route::get('/isCheckIned/{roomId}', [CheckoutController::class, 'isCheckIned']);
     Route::get('/checkout/list', [CheckoutController::class, 'getCheckoutList']);
     Route::post('/checkout/payments', [CheckoutController::class, 'recordPayment']);
     
@@ -85,4 +86,4 @@ Route::get('/checkin/{checkinid}', [CheckinController::class, 'checkin']);
 Route::put('/editcheckin/{checkinId}', [CheckinController::class, 'editCheckin']);
 
 Route::get('/checkindetails/{checkinId}', [CheckoutController::class, 'getCheckinDetails']);
-Route::get('/checkinroomdetails/{checkinId}', [CheckoutController::class, 'getCheckinRoomDetails']);
+Route::get('/checkinroomdetails/{checkinId}/{roomId}', [CheckoutController::class, 'getCheckinRoomDetails']);

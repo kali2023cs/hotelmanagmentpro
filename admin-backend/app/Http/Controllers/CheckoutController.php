@@ -7,8 +7,10 @@ use Illuminate\Support\Facades\DB;
 use App\Models\CheckinMaster;
 use App\Models\CheckinRoomTrans;
 use App\Models\CheckoutMaster;
+use App\Models\RoomStatusMaster;
 use App\Models\CheckoutPayment;
 use App\Models\Invoice;
+use App\Models\Invoiceitem;
 use App\Models\RoomMaster;
 use Carbon\Carbon;
 
@@ -42,27 +44,25 @@ class CheckoutController extends Controller
         }
     }
 
-    public function getCheckinRoomDetails($checkinId)
+   public function getCheckinRoomDetails($checkinId, $roomId)
     {
         try {
             $roomDetails = CheckinRoomTrans::where('checkin_id', $checkinId)
-                ->with(['roomType' => function($query) {
-                    $query->select('id', 'room_type_name');
-                }])
-                ->with(['room' => function($query) {
-                    $query->select('id', 'room_no');
-                }])
+                ->where('room_id', $roomId)
+                ->with([
+                    'roomType:id,room_type_name',
+                    'room:id,room_no'
+                ])
                 ->get();
 
             if ($roomDetails->isEmpty()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'No room details found for this check-in'
+                    'message' => 'No room details found for this check-in.'
                 ], 404);
             }
 
-            // Format the response with additional room type names and room numbers
-            $formattedDetails = $roomDetails->map(function($detail) {
+            $formattedDetails = $roomDetails->map(function ($detail) {
                 return [
                     'id' => $detail->id,
                     'room_type_id' => $detail->room_type_id,
@@ -80,7 +80,7 @@ class CheckoutController extends Controller
                     'disc_val' => $detail->disc_val,
                     'total' => $detail->total,
                     'created_at' => $detail->created_at,
-                    'updated_at' => $detail->updated_at
+                    'updated_at' => $detail->updated_at,
                 ];
             });
 
@@ -90,7 +90,6 @@ class CheckoutController extends Controller
                     'roomDetails' => $formattedDetails
                 ]
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -98,6 +97,7 @@ class CheckoutController extends Controller
             ], 500);
         }
     }
+
 
     private static function calculateNights($checkInDate, $checkOutDate)
     {
@@ -123,27 +123,43 @@ class CheckoutController extends Controller
             'invoice_items.*.amount' => 'required|numeric|min:0',
         ]);
 
+        $checkRoom = CheckinRoomTrans::where('room_id', $request->room_id)
+            ->where('checkin_id', $request->checkin_id)
+            ->first();
+
+            
+
+        $check_room_id = $checkRoom ? $checkRoom->id : null;
+
         DB::beginTransaction();
 
         try {
             // 1. Get check-in data
             $checkin = CheckinMaster::with('rooms')->findOrFail($request->checkin_id);
 
-            // 2. Calculate totals
+            // 2. Calculate invoice totals
             $subtotal = collect($request->invoice_items)->sum('amount');
             $taxAmount = collect($request->invoice_items)->sum(function ($item) {
                 return ($item['amount'] * $item['tax_rate']) / 100;
             });
             $grandTotal = $subtotal + $taxAmount;
-
-            // 3. Determine payment status
+            
+            // 3. Validate payment amount
             $paymentAmount = $request->payment_amount ?? 0;
-            $paymentStatus = $paymentAmount >= $grandTotal ? 'Paid' : 
-                        ($paymentAmount > 0 ? 'Partially Paid' : 'Pending');
+            if ($paymentAmount > $grandTotal) {
+                throw new \Exception("Payment amount cannot be greater than total amount due");
+            }
 
-            // 4. Create checkout record
+            // 4. Determine payment status
+            $paymentStatus = $paymentAmount == 0 ? 'Pending' : 
+                           ($paymentAmount >= $grandTotal ? 'Paid' : 'Partially Paid');
+                           
+            $balanceDue = $grandTotal - $paymentAmount;
+
+            // 5. Create checkout record
             $checkout = CheckoutMaster::create([
                 'checkin_id' => $checkin->id,
+                'check_room_id' => $check_room_id,
                 'actual_checkout_datetime' => $request->actual_checkout_datetime,
                 'early_checkout' => Carbon::parse($request->actual_checkout_datetime) < Carbon::parse($checkin->check_out_datetime),
                 'late_checkout' => Carbon::parse($request->actual_checkout_datetime) > Carbon::parse($checkin->check_out_datetime),
@@ -153,13 +169,13 @@ class CheckoutController extends Controller
                 'grand_total' => $grandTotal,
                 'payment_status' => $paymentStatus,
                 'amount_paid' => $paymentAmount,
-                'balance_due' => $grandTotal - $paymentAmount,
+                'balance_due' => $balanceDue,
                 'created_by' => $request->user()->id,
             ]);
 
-            // 5. Record payment if any
+            // 6. Record payment if any
             if ($paymentAmount > 0) {
-                CheckoutPayment::create([
+                $payment = CheckoutPayment::create([
                     'checkout_id' => $checkout->id,
                     'payment_method' => $request->payment_method,
                     'payment_amount' => $paymentAmount,
@@ -169,20 +185,26 @@ class CheckoutController extends Controller
                 ]);
             }
 
-            // 6. Generate invoice
+            // 7. Generate invoice
             $invoice = Invoice::create([
                 'invoice_number' => 'INV-' . time(),
                 'checkout_id' => $checkout->id,
                 'invoice_date' => now(),
                 'due_date' => now()->addDays(7),
-                'status' => $paymentStatus === 'Paid' ? 'Paid' : 'Sent',
+                'status' => $paymentStatus === 'Paid' ? 'Paid' : 'Pending',
+                'subtotal' => $subtotal,
+                'tax_amount' => $taxAmount,
+                'total_amount' => $grandTotal,
+                'amount_paid' => $paymentAmount,
+                'balance_due' => $balanceDue,
                 'notes' => $request->checkout_remarks,
                 'terms' => 'Payment due within 7 days',
             ]);
 
-            // 7. Add invoice items
+            // 8. Add invoice items
             foreach ($request->invoice_items as $item) {
-                $invoice->items()->create([
+                Invoiceitem::create([
+                    'invoice_id' => $invoice->id,
                     'item_type' => $item['item_type'],
                     'description' => $item['description'],
                     'quantity' => $item['quantity'],
@@ -192,9 +214,14 @@ class CheckoutController extends Controller
                 ]);
             }
 
-            // 8. Update room status to available
-            RoomMaster::whereIn('id', $checkin->rooms->pluck('room_id'))
-                ->update(['status_id' => 1]); // 1 = Available
+            $dirtyStatusId = RoomStatusMaster::where(DB::raw('UPPER(status_name)'), 'DIRTY')->pluck('id')->first();
+
+            RoomMaster::where('id', $request->room_id)
+                ->update([
+                    'status_id' => $dirtyStatusId,
+                    'checkin_id' => null
+                ]);
+ 
 
             DB::commit();
 
@@ -203,6 +230,8 @@ class CheckoutController extends Controller
                 'message' => 'Checkout processed successfully',
                 'checkout_id' => $checkout->id,
                 'invoice_number' => $invoice->invoice_number,
+                'payment_status' => $paymentStatus,
+                'balance_due' => $balanceDue,
             ]);
 
         } catch (\Exception $e) {
@@ -256,68 +285,58 @@ class CheckoutController extends Controller
         }
     }
 
-    public function recordPayment(Request $request)
+    private function savePayment($data, $userId)
     {
-        // echo '<pre>';
-        // print_r($request->all());
-        // echo '</pre>';
-        // return;
-        // $request->validate([
-        //     'checkout_id' => 'required|exists:checkout_master,id',
-        //     'payment_method' => 'required|string',
-        //     'payment_amount' => 'required|numeric|min:0.01',
-        //     'payment_date' => 'required|date',
-        //     'transaction_reference' => 'nullable|string',
-        //     'notes' => 'nullable|string',
-        // ]);
+        // Create payment
+        $payment = CheckoutPayment::create([
+            'checkout_id' => $data['checkout_id'],
+            'payment_method' => $data['payment_method'],
+            'payment_amount' => $data['payment_amount'],
+            'payment_date' => $data['payment_date'] ?? now(),
+            'transaction_reference' => $data['transaction_reference'] ?? 'PAY-' . time(),
+            'payment_notes' => $data['notes'] ?? null,
+            'created_by' => $userId,
+        ]);
 
-        DB::beginTransaction();
+        // Update checkout totals and status
+        $checkout = CheckoutMaster::findOrFail($data['checkout_id']);
+        $totalPaid = $checkout->payments()->sum('payment_amount');
+        $newStatus = $totalPaid >= $checkout->grand_total ? 'Paid' :
+                    ($totalPaid > 0 ? 'Partially Paid' : 'Pending');
 
-        try {
-            // Record the payment
-            $payment = CheckoutPayment::create([
-                'checkout_id' => $request->checkout_id,
-                'payment_method' => $request->payment_method,
-                'payment_amount' => $request->payment_amount,
-                'payment_date' => $request->payment_date,
-                'transaction_reference' => $request->transaction_reference,
-                'payment_notes' => $request->notes,
-                'created_by' => $request->user()->id,
-            ]);
+        $checkout->update([
+            'payment_status' => $newStatus,
+            'amount_paid' => $totalPaid,
+            'balance_due' => $checkout->grand_total - $totalPaid,
+        ]);
 
-            // Update checkout payment status
-            $checkout = CheckoutMaster::findOrFail($request->checkout_id);
-            $totalPaid = $checkout->payments()->sum('payment_amount');
-            $newStatus = $totalPaid >= $checkout->grand_total ? 'Paid' : 
-                        ($totalPaid > 0 ? 'Partially Paid' : 'Pending');
+        // Update invoice status
+        if ($newStatus === 'Paid' && $checkout->invoice) {
+            $checkout->invoice->update(['status' => 'Paid']);
+        }
 
-            $checkout->update([
-                'payment_status' => $newStatus,
-                'amount_paid' => $totalPaid,
-                'balance_due' => $checkout->grand_total - $totalPaid,
-            ]);
+        return $payment;
+    }
 
-            // Update invoice status if fully paid
-            if ($newStatus === 'Paid' && $checkout->invoice) {
-                $checkout->invoice->update(['status' => 'Paid']);
-            }
+    public function isCheckIned($roomId)
+    {
+        $checkinId = RoomMaster::where('id', $roomId)->value('checkin_id');
 
-            DB::commit();
-
+        if ($checkinId) {
             return response()->json([
-                'success' => true,
-                'message' => 'Payment recorded successfully',
-                'payment_id' => $payment->id,
+                'status' => true,
+                'checkin_id' => $checkinId,
+                'message' => 'Room is already checked in.'
             ]);
-
-        } catch (\Exception $e) {
-            DB::rollBack();
+        } else {
             return response()->json([
-                'success' => false,
-                'message' => 'Error recording payment: ' . $e->getMessage(),
-            ], 500);
+                'status' => false,
+                'message' => 'Room is already checked out.'
+            ]);
         }
     }
+
+
 
     
 }

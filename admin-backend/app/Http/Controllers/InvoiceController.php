@@ -12,7 +12,7 @@ class InvoiceController extends Controller
     {
         try {
             $perPage = $request->per_page ?? 10;
-            $invoices = Invoice::with(['checkout.checkin'])
+            $invoices = Invoice::with(['checkout.checkin.rooms.roomType', 'checkout.checkin.rooms.room'])
                 ->orderBy('created_at', 'desc')
                 ->paginate($perPage);
 
@@ -33,7 +33,8 @@ class InvoiceController extends Controller
     {
         try {
             $invoice = Invoice::with([
-                'checkout.checkin',
+                'checkout.checkin.rooms.roomType',
+                'checkout.checkin.rooms.room',
                 'checkout.payments',
                 'items'
             ])->where('invoice_number', $invoiceNumber)->firstOrFail();
@@ -55,17 +56,21 @@ class InvoiceController extends Controller
     {
         try {
             $invoice = Invoice::with([
-                'checkout.checkin',
+                'checkout.checkin.rooms.roomType',
+                'checkout.checkin.rooms.room',
                 'checkout.payments',
                 'items'
             ])->where('invoice_number', $invoiceNumber)->firstOrFail();
 
             // Calculate totals
-            $subtotal = $invoice->items->sum('amount');
-            $taxAmount = $invoice->items->sum(function($item) {
+            $subtotal = $invoice->subtotal ?? $invoice->items->sum('amount');
+            $taxAmount = $invoice->tax_amount ?? $invoice->items->sum(function($item) {
                 return ($item->amount * $item->tax_rate) / 100;
             });
-            $total = $subtotal + $taxAmount;
+            $discountAmount = $invoice->discount_amount ?? ($invoice->checkout->discount_amount ?? 0);
+            $total = $invoice->total_amount ?? ($subtotal + $taxAmount - $discountAmount);
+            $amountPaid = $invoice->amount_paid ?? ($invoice->checkout->amount_paid ?? 0);
+            $balanceDue = $invoice->balance_due ?? ($invoice->checkout->balance_due ?? 0);
 
             return response()->json([
                 'success' => true,
@@ -73,7 +78,10 @@ class InvoiceController extends Controller
                     'invoice' => $invoice,
                     'subtotal' => $subtotal,
                     'taxAmount' => $taxAmount,
+                    'discountAmount' => $discountAmount,
                     'total' => $total,
+                    'amountPaid' => $amountPaid,
+                    'balanceDue' => $balanceDue,
                     'date' => now()->format('d/m/Y'),
                 ]
             ]);

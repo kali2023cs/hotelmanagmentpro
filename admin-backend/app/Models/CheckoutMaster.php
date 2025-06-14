@@ -8,7 +8,7 @@ class CheckoutMaster extends Model
     protected $table = 'checkout_master';
     
     protected $fillable = [
-        'checkin_id', 'actual_checkout_datetime', 'early_checkout', 'late_checkout',
+        'checkin_id','check_room_id', 'actual_checkout_datetime', 'early_checkout', 'late_checkout',
         'checkout_remarks', 'payment_status', 'total_amount', 'tax_amount',
         'discount_amount', 'grand_total', 'amount_paid', 'balance_due', 'created_by'
     ];

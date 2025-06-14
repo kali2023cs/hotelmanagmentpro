@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2025 at 02:58 PM
+-- Generation Time: Jun 14, 2025 at 02:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -115,7 +115,8 @@ INSERT INTO `block_rooms` (`id`, `room_id`, `status_id`, `reason`, `fromdatetime
 (5, 7, 7, 'Tesing', '2025-06-12 18:30:00', '2025-06-18 18:30:00', 1, '2025-06-12 13:11:18'),
 (6, 9, 7, 'Tesing', '2025-06-19 18:30:00', '2025-06-18 18:30:00', 1, '2025-06-12 13:14:01'),
 (7, 10, 7, 'testing', '2025-06-11 18:30:00', '2025-06-13 18:30:00', 1, '2025-06-12 13:15:31'),
-(8, 11, 7, 'Tesing', '2025-06-11 18:30:00', '2025-06-12 18:30:00', 1, '2025-06-12 13:17:52');
+(8, 11, 7, 'Tesing', '2025-06-11 18:30:00', '2025-06-12 18:30:00', 1, '2025-06-12 13:17:52'),
+(9, 14, 7, '1500.00', '2025-06-13 18:30:00', '2025-06-29 18:30:00', 1, '2025-06-14 11:33:19');
 
 -- --------------------------------------------------------
 
@@ -221,9 +222,8 @@ CREATE TABLE `checkin_master` (
 --
 
 INSERT INTO `checkin_master` (`id`, `is_reservation`, `reservation_number`, `arrival_mode`, `ota`, `booking_id`, `contact`, `title`, `first_name`, `last_name`, `gender`, `city`, `id_number`, `email`, `check_in_mode`, `allow_credit`, `foreign_guest`, `segment_id`, `business_source_id`, `photo`, `document`, `gst_number`, `guest_company`, `age`, `gst_type`, `address`, `visit_remark`, `pin_code`, `nationality`, `booking_instructions`, `guest_special_instructions`, `is_vip`, `check_in_type`, `check_in_datetime`, `number_of_days`, `check_out_datetime`, `grace_hours`, `payment_by`, `allow_charges_posting`, `enable_paxwise`, `enable_room_sharing`, `created_at`, `updated_at`) VALUES
-(1, 1, '2002', '1', 'assasas', '1212', '232322', '1', 'kali', 'dass', '1', 'chennaii', '12231221', 'assa@gmail.com', 'Day', 'Yes', 'Yes', 2, 2, NULL, NULL, 'wwe232ee2', 'sdsdsdsd', 22, 'UNREGISTERED', 'dfeffdc', 'sdsdsds', '233233', 'Indian', 'cvxvsv', 'sdvsfvv', 1, '24 Hours CheckIn', '2025-06-10 11:58:26', 1, '2025-06-11 11:58:26', 2, 'Direct', 1, 1, 0, '2025-06-10 01:01:38', '2025-06-10 01:01:38'),
-(3, 0, NULL, '1', 'sasas', 'asasas', '23232323', '1', 'sdsdsd', 'sdsd', '1', 'sdsd', 'sdsdsd', 'ssdsdd@sdsd.cm', 'Day', 'Yes', 'No', 1, 1, NULL, NULL, 'asddsdsds', 'dxssdsdd', 22, 'UNREGISTERED', 'sxxsxsxx', 'czxccx', '11221', 'Indian', 'cxx', 'cxcxx', 1, '24 Hours CheckIn', '2025-06-10 14:45:12', 1, '2025-06-11 14:45:12', 2, 'Direct', 0, 0, 0, '2025-06-10 03:59:14', '2025-06-10 06:12:38'),
-(4, 1, '21212122', '1', '12121212', '12121212', '33232323', '2', 'ssdd', 'sdsdsdsdd', '2', 'ssdsdsd', '122121212', 'ass@gmail.com', 'Day', 'Yes', 'Yes', 1, 2, NULL, NULL, 'qssasas', 'asasasa', 22, 'UNREGISTERED', 'xxaassasas', 'asasasas', '122121212', 'Foreign', 'czxxx', 'zxxzzx', 1, '24 Hours CheckIn', '2025-06-12 17:19:33', 1, '2025-06-14 17:19:33', 2, 'Company', 1, 1, 1, '2025-06-10 06:21:43', '2025-06-10 06:21:43');
+(1, 0, NULL, '1', 'asdfsg', '23456', '12345678', '1', 'kalidass', 'R', '1', 'Chennai', '12345678', 'kalidass@gmail.com', 'Day', 'No', 'No', 2, 4, NULL, NULL, '12345678', 'asdcfvg', 22, 'UNREGISTERED', 'asdcfghj', 'qwertyuio', '123456', 'Indian', 'asdfghj', 'qwertghjk', 1, '24 Hours CheckIn', '2025-06-14 15:30:51', 1, '2025-06-15 15:30:51', 2, 'Direct', 1, 1, 0, '2025-06-14 04:34:36', '2025-06-14 04:34:36'),
+(2, 0, NULL, '2', NULL, NULL, '123456789', '1', 'Dass', 'R', '1', 'Chennai', '1234567890', NULL, 'Day', 'No', 'No', 1, NULL, NULL, NULL, NULL, NULL, NULL, 'UNREGISTERED', NULL, NULL, NULL, 'Indian', NULL, NULL, 1, '24 Hours CheckIn', '2025-06-14 17:01:49', 1, '2025-06-15 17:01:49', 2, 'Direct', 1, 0, 0, '2025-06-14 06:05:59', '2025-06-14 06:05:59');
 
 -- --------------------------------------------------------
 
@@ -255,10 +255,7 @@ CREATE TABLE `checkin_room_trans` (
 --
 
 INSERT INTO `checkin_room_trans` (`id`, `checkin_id`, `room_type_id`, `room_id`, `rate_plan_id`, `guest_name`, `contact`, `male`, `female`, `extra`, `net_rate`, `disc_type`, `disc_val`, `total`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 5, 1, 'dassa', '1212212', 2, 0, 1, 1100.00, 'Amount', 122.00, 978.00, '2025-06-10 01:01:38', '2025-06-10 01:01:38'),
-(2, 1, 6, 23, 5, 'dass', '23232323', 2, 0, 1, 700.00, 'No Disc', 0.00, 700.00, '2025-06-10 01:01:38', '2025-06-10 01:01:38'),
-(6, 3, 3, 9, 6, 'asasas', '12121212', 2, 0, 1, 2000.00, 'No Disc', 0.00, 2000.00, '2025-06-10 06:12:38', '2025-06-10 06:12:38'),
-(7, 4, 4, 2, 4, 'sasasa', '1212212', 2, 0, 1, 1500.00, 'Amount', 1222.00, 278.00, '2025-06-10 06:21:43', '2025-06-10 06:21:43');
+(3, 2, 3, 5, 1, 'dass', '123456789', 1, 1, 0, 1100.00, 'Percentage', 24.00, 836.00, '2025-06-14 06:05:59', '2025-06-14 06:05:59');
 
 -- --------------------------------------------------------
 
@@ -269,6 +266,7 @@ INSERT INTO `checkin_room_trans` (`id`, `checkin_id`, `room_type_id`, `room_id`,
 CREATE TABLE `checkout_master` (
   `id` int(11) NOT NULL,
   `checkin_id` int(11) NOT NULL,
+  `check_room_id` bigint(20) DEFAULT NULL,
   `actual_checkout_datetime` datetime NOT NULL,
   `early_checkout` tinyint(1) DEFAULT 0,
   `late_checkout` tinyint(1) DEFAULT 0,
@@ -289,10 +287,10 @@ CREATE TABLE `checkout_master` (
 -- Dumping data for table `checkout_master`
 --
 
-INSERT INTO `checkout_master` (`id`, `checkin_id`, `actual_checkout_datetime`, `early_checkout`, `late_checkout`, `checkout_remarks`, `payment_status`, `total_amount`, `tax_amount`, `discount_amount`, `grand_total`, `amount_paid`, `balance_due`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 1, '2025-06-13 11:56:19', 0, 1, NULL, 'Partially Paid', 1678.00, 201.36, 0.00, 1879.36, 1699.36, 180.00, 1, '2025-06-13 06:29:00', '2025-06-13 06:29:00'),
-(2, 1, '2025-06-13 12:12:12', 0, 1, NULL, 'Paid', 1678.00, 201.36, 0.00, 1879.36, 3758.72, -1879.36, 1, '2025-06-13 06:43:03', '2025-06-13 06:43:04'),
-(4, 1, '2025-06-13 12:57:14', 0, 1, NULL, 'Paid', 1678.00, 201.36, 0.00, 1879.36, 1879.36, 0.00, 1, '2025-06-13 07:27:40', '2025-06-13 07:27:40');
+INSERT INTO `checkout_master` (`id`, `checkin_id`, `check_room_id`, `actual_checkout_datetime`, `early_checkout`, `late_checkout`, `checkout_remarks`, `payment_status`, `total_amount`, `tax_amount`, `discount_amount`, `grand_total`, `amount_paid`, `balance_due`, `created_by`, `created_at`, `updated_at`) VALUES
+(3, 1, 1, '2025-06-14 10:11:53', 1, 0, NULL, 'Paid', 1000.00, 120.00, 0.00, 1120.00, 1120.00, 0.00, 1, '2025-06-14 04:43:07', '2025-06-14 04:43:07'),
+(4, 1, 2, '2025-06-14 10:16:14', 1, 0, NULL, 'Partially Paid', 1465.00, 175.80, 0.00, 1640.80, 1000.00, 640.80, 1, '2025-06-14 04:46:39', '2025-06-14 04:46:39'),
+(5, 2, 3, '2025-06-14 11:55:14', 1, 0, NULL, 'Paid', 1076.00, 129.12, 0.00, 1205.12, 1205.12, 0.00, 1, '2025-06-14 06:25:32', '2025-06-14 06:25:32');
 
 -- --------------------------------------------------------
 
@@ -318,10 +316,9 @@ CREATE TABLE `checkout_payments` (
 --
 
 INSERT INTO `checkout_payments` (`id`, `checkout_id`, `payment_method`, `payment_amount`, `payment_date`, `transaction_reference`, `payment_notes`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Credit Card', 1699.36, '2025-06-13 11:59:00', 'PAY-1749815940', NULL, 1, '2025-06-13 06:29:00', '2025-06-13 06:29:00'),
-(2, 2, 'Cash', 1879.36, '2025-06-13 12:13:03', 'PAY-1749816783', NULL, 1, '2025-06-13 06:43:03', '2025-06-13 06:43:03'),
-(3, 2, 'Cash', 1879.36, '2025-06-13 12:13:03', NULL, NULL, 1, '2025-06-13 06:43:04', '2025-06-13 06:43:04'),
-(5, 4, 'Cash', 1879.36, '2025-06-13 12:57:40', 'PAY-1749819460', NULL, 1, '2025-06-13 07:27:40', '2025-06-13 07:27:40');
+(3, 3, 'Cash', 1120.00, '2025-06-14 10:13:07', 'PAY-1749895987', NULL, 1, '2025-06-14 04:43:07', '2025-06-14 04:43:07'),
+(4, 4, 'Cash', 1000.00, '2025-06-14 10:16:39', 'PAY-1749896199', NULL, 1, '2025-06-14 04:46:39', '2025-06-14 04:46:39'),
+(5, 5, 'Cash', 1205.12, '2025-06-14 11:55:32', 'PAY-1749902132', NULL, 1, '2025-06-14 06:25:32', '2025-06-14 06:25:32');
 
 -- --------------------------------------------------------
 
@@ -472,9 +469,14 @@ CREATE TABLE `invoices` (
   `checkout_id` int(11) NOT NULL,
   `invoice_date` date NOT NULL,
   `due_date` date NOT NULL,
-  `status` enum('Draft','Sent','Paid','Cancelled') NOT NULL DEFAULT 'Draft',
+  `status` varchar(20) NOT NULL DEFAULT 'Pending',
   `notes` text DEFAULT NULL,
   `terms` text DEFAULT NULL,
+  `subtotal` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `tax_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `total_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `amount_paid` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `balance_due` decimal(10,2) NOT NULL DEFAULT 0.00,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -483,10 +485,10 @@ CREATE TABLE `invoices` (
 -- Dumping data for table `invoices`
 --
 
-INSERT INTO `invoices` (`id`, `invoice_number`, `checkout_id`, `invoice_date`, `due_date`, `status`, `notes`, `terms`, `created_at`, `updated_at`) VALUES
-(1, 'INV-1749815940', 1, '2025-06-13', '2025-06-20', 'Sent', NULL, 'Payment due within 7 days', '2025-06-13 06:29:00', '2025-06-13 06:29:00'),
-(2, 'INV-1749816783', 2, '2025-06-13', '2025-06-20', 'Paid', NULL, 'Payment due within 7 days', '2025-06-13 06:43:03', '2025-06-13 06:43:05'),
-(4, 'INV-1749819460', 4, '2025-06-13', '2025-06-20', 'Paid', NULL, 'Payment due within 7 days', '2025-06-13 07:27:40', '2025-06-13 07:27:40');
+INSERT INTO `invoices` (`id`, `invoice_number`, `checkout_id`, `invoice_date`, `due_date`, `status`, `notes`, `terms`, `subtotal`, `tax_amount`, `total_amount`, `amount_paid`, `balance_due`, `created_at`, `updated_at`) VALUES
+(3, 'INV-1749895987', 3, '2025-06-14', '2025-06-21', 'Paid', NULL, 'Payment due within 7 days', 1000.00, 120.00, 1120.00, 1120.00, 0.00, '2025-06-14 04:43:07', '2025-06-14 04:43:07'),
+(4, 'INV-1749896199', 4, '2025-06-14', '2025-06-21', 'Pending', NULL, 'Payment due within 7 days', 1465.00, 175.80, 1640.80, 1000.00, 640.80, '2025-06-14 04:46:39', '2025-06-14 04:46:39'),
+(5, 'INV-1749902132', 5, '2025-06-14', '2025-06-21', 'Paid', NULL, 'Payment due within 7 days', 1076.00, 129.12, 1205.12, 1205.12, 0.00, '2025-06-14 06:25:32', '2025-06-14 06:25:32');
 
 -- --------------------------------------------------------
 
@@ -512,12 +514,9 @@ CREATE TABLE `invoice_items` (
 --
 
 INSERT INTO `invoice_items` (`id`, `invoice_id`, `item_type`, `description`, `quantity`, `unit_price`, `tax_rate`, `amount`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Room', 'Room 505 - Standard Room', 1.00, 1100.00, 12.00, 978.00, '2025-06-13 06:29:00', '2025-06-13 06:29:00'),
-(2, 1, 'Room', 'Room 104 - Executive Room', 1.00, 700.00, 12.00, 700.00, '2025-06-13 06:29:00', '2025-06-13 06:29:00'),
-(3, 2, 'Room', 'Room 505 - Standard Room', 1.00, 1100.00, 12.00, 978.00, '2025-06-13 06:43:03', '2025-06-13 06:43:03'),
-(4, 2, 'Room', 'Room 104 - Executive Room', 1.00, 700.00, 12.00, 700.00, '2025-06-13 06:43:03', '2025-06-13 06:43:03'),
-(8, 4, 'Room', 'Room 505 - Standard Room', 1.00, 1100.00, 12.00, 978.00, '2025-06-13 07:27:40', '2025-06-13 07:27:40'),
-(9, 4, 'Room', 'Room 104 - Executive Room', 1.00, 700.00, 12.00, 700.00, '2025-06-13 07:27:40', '2025-06-13 07:27:40');
+(3, 3, 'Room', 'Room 501 - Standard Room (1 night)', 1.00, 1100.00, 12.00, 1000.00, '2025-06-14 04:43:07', '2025-06-14 04:43:07'),
+(4, 4, 'Room', 'Room 502 - Deluxe Room (1 night)', 1.00, 1500.00, 12.00, 1465.00, '2025-06-14 04:46:39', '2025-06-14 04:46:39'),
+(5, 5, 'Room', 'Room 505 - Standard Room (1 night)', 1.00, 1100.00, 12.00, 1076.00, '2025-06-14 06:25:32', '2025-06-14 06:25:32');
 
 -- --------------------------------------------------------
 
@@ -620,7 +619,7 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 (29, 'App\\Models\\User', 1, 'authToken', 'b62eac3e22fff3188615c968a1917b19ad6a9087ec28d2bd8370b3dc885185cc', '[\"*\"]', NULL, NULL, '2025-06-07 05:20:56', '2025-06-07 05:20:56'),
 (31, 'App\\Models\\User', 1, 'authToken', '64905b4d3b0ec5f791754157992bfaa4b6501bc4da8296f0e8204c1407440899', '[\"*\"]', '2025-06-09 07:44:18', NULL, '2025-06-07 06:49:43', '2025-06-09 07:44:18'),
 (37, 'App\\Models\\User', 1, 'authToken', 'd89fa79fc868f14955acc49a2c718f020175fea52b0457a4a6f294d5878ab157', '[\"*\"]', NULL, NULL, '2025-06-11 23:14:47', '2025-06-11 23:14:47'),
-(39, 'App\\Models\\User', 1, 'authToken', 'dea883144134d67fad2dddb81f5b408b78daefd5822f0fd2d09c0144a4f4840a', '[\"*\"]', '2025-06-13 07:27:43', NULL, '2025-06-12 05:54:06', '2025-06-13 07:27:43');
+(39, 'App\\Models\\User', 1, 'authToken', 'dea883144134d67fad2dddb81f5b408b78daefd5822f0fd2d09c0144a4f4840a', '[\"*\"]', '2025-06-14 06:32:43', NULL, '2025-06-12 05:54:06', '2025-06-14 06:32:43');
 
 -- --------------------------------------------------------
 
@@ -748,6 +747,7 @@ CREATE TABLE `room_master` (
   `max_pax` int(11) NOT NULL DEFAULT 0,
   `max_extra_pax` int(11) NOT NULL DEFAULT 0,
   `status_id` int(11) NOT NULL,
+  `checkin_id` bigint(20) DEFAULT NULL,
   `is_active` tinyint(1) DEFAULT 1,
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
@@ -761,31 +761,31 @@ CREATE TABLE `room_master` (
 -- Dumping data for table `room_master`
 --
 
-INSERT INTO `room_master` (`id`, `room_no`, `display_order`, `floor_id`, `room_type_id`, `max_pax`, `max_extra_pax`, `status_id`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, '501', 1, 5, 3, 2, 1, 4, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-13 03:33:05', NULL),
-(2, '502', 2, 5, 4, 2, 1, 2, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-10 06:21:43', NULL),
-(3, '503', 3, 5, 5, 3, 2, 7, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-12 07:35:15', NULL),
-(4, '504', 4, 5, 6, 3, 2, 2, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
-(5, '505', 5, 5, 3, 2, 1, 1, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-13 07:27:40', NULL),
-(6, '506', 6, 5, 4, 2, 1, 7, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-12 07:39:24', NULL),
-(7, '507', 7, 5, 5, 3, 2, 7, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-12 07:41:18', NULL),
-(8, '508', 8, 5, 6, 3, 2, 2, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
-(9, '509', 9, 5, 3, 2, 1, 7, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-12 07:44:01', NULL),
-(10, '510', 10, 5, 4, 2, 1, 7, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-12 07:45:31', NULL),
-(11, '601', 11, 6, 5, 3, 2, 7, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-12 07:47:52', NULL),
-(12, '602', 12, 6, 6, 3, 2, 2, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
-(13, '603', 13, 6, 3, 2, 1, 3, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:50:00', NULL),
-(14, '604', 14, 6, 4, 2, 1, 1, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
-(15, '605', 15, 6, 5, 3, 2, 1, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
-(16, '606', 16, 6, 6, 3, 2, 2, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
-(17, '607', 17, 6, 3, 2, 1, 3, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:50:03', NULL),
-(18, '608', 18, 6, 4, 2, 1, 1, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
-(19, '609', 19, 6, 5, 3, 2, 1, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
-(20, '610', 20, 6, 6, 3, 2, 2, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
-(21, '101', 1, 6, 5, 1, 1, 4, 1, 1, 1, NULL, '2025-06-07 06:39:35', '2025-06-07 06:39:35', NULL),
-(22, '102', 2, 5, 4, 2, 1, 5, 1, 1, 1, NULL, '2025-06-07 06:39:56', '2025-06-07 06:39:56', NULL),
-(23, '104', 3, 6, 6, 2, 1, 1, 1, 1, 1, NULL, '2025-06-07 06:40:13', '2025-06-13 07:27:40', NULL),
-(24, '106', 1, 6, 4, 1, 2, 7, 1, 1, 1, NULL, '2025-06-07 06:40:37', '2025-06-07 06:40:37', NULL);
+INSERT INTO `room_master` (`id`, `room_no`, `display_order`, `floor_id`, `room_type_id`, `max_pax`, `max_extra_pax`, `status_id`, `checkin_id`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, '501', 1, 5, 3, 2, 1, 4, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 04:43:07', NULL),
+(2, '502', 2, 5, 4, 2, 1, 4, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 04:46:39', NULL),
+(3, '503', 3, 5, 5, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
+(4, '504', 4, 5, 6, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
+(5, '505', 5, 5, 3, 2, 1, 4, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 06:25:32', NULL),
+(6, '506', 6, 5, 4, 2, 1, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
+(7, '507', 7, 5, 5, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
+(8, '508', 8, 5, 6, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
+(9, '509', 9, 5, 3, 2, 1, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
+(10, '510', 10, 5, 4, 2, 1, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
+(11, '601', 11, 6, 5, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
+(12, '602', 12, 6, 6, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
+(13, '603', 13, 6, 3, 2, 1, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
+(14, '604', 14, 6, 4, 2, 1, 7, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 06:03:19', NULL),
+(15, '605', 15, 6, 5, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
+(16, '606', 16, 6, 6, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
+(17, '607', 17, 6, 3, 2, 1, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
+(18, '608', 18, 6, 4, 2, 1, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
+(19, '609', 19, 6, 5, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
+(20, '610', 20, 6, 6, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
+(21, '101', 1, 6, 5, 1, 1, 1, NULL, 1, 1, 1, NULL, '2025-06-07 06:39:35', '2025-06-14 09:58:56', NULL),
+(22, '102', 2, 5, 4, 2, 1, 1, NULL, 1, 1, 1, NULL, '2025-06-07 06:39:56', '2025-06-14 09:58:56', NULL),
+(23, '104', 3, 6, 6, 2, 1, 1, NULL, 1, 1, 1, NULL, '2025-06-07 06:40:13', '2025-06-14 09:58:56', NULL),
+(24, '106', 1, 6, 4, 1, 2, 1, NULL, 1, 1, 1, NULL, '2025-06-07 06:40:37', '2025-06-14 09:58:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -1153,7 +1153,7 @@ ALTER TABLE `block_master`
 -- AUTO_INCREMENT for table `block_rooms`
 --
 ALTER TABLE `block_rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `business_source`
@@ -1165,19 +1165,19 @@ ALTER TABLE `business_source`
 -- AUTO_INCREMENT for table `checkin_master`
 --
 ALTER TABLE `checkin_master`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `checkin_room_trans`
 --
 ALTER TABLE `checkin_room_trans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `checkout_master`
 --
 ALTER TABLE `checkout_master`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `checkout_payments`
@@ -1219,13 +1219,13 @@ ALTER TABLE `gender_master`
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `invoice_items`
 --
 ALTER TABLE `invoice_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `jobs`
