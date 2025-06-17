@@ -9,6 +9,7 @@ use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\RoommenuController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\NonRevenueController;
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -65,25 +66,41 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/invoices/{invoiceNumber}', [InvoiceController::class, 'getInvoiceDetails']);
     Route::get('/invoices/generate-pdf/{invoiceNumber}', [InvoiceController::class, 'generatePdf']);
 
+    Route::post('/generate-police-report', [NonRevenueController::class, 'generatePoliceReport']);
+
+    Route::get('/getAllActiveRooms', [DashboardController::class, 'getAllActiveRooms']);
+    Route::get('/getArrivalModes', [CheckinController::class, 'getArrivalModes']);
+    Route::get('/getAllGender', [CheckinController::class, 'getAllGender']);
+    Route::get('/getAllTitleMaster', [CheckinController::class, 'getAllTitleMaster']);
+    Route::get('/getAllRoomTypes', [CheckinController::class, 'getAllRoomTypes']);
+    Route::get('/getAllSegments', [CheckinController::class, 'getAllSegments']);
+    Route::get('/getAllBusinessSources', [CheckinController::class, 'getAllBusinessSources']);
+    Route::get('/getRoomsByType/{roomTypeId}', [CheckinController::class, 'getRoomsByType']);
+    Route::get('/getRoomTypePlan/{roomTypeId}', [CheckinController::class, 'getRoomTypePlan']);
+
+    Route::post('/checkinConfirm', [CheckinController::class, 'checkinConfirm']);
+    Route::get('/checkinList', [CheckinController::class, 'checkinList']);
+    Route::get('/checkin/{checkinid}', [CheckinController::class, 'checkin']);
+    Route::put('/editcheckin/{checkinId}', [CheckinController::class, 'editCheckin']);
+
+    Route::get('/checkindetails/{checkinId}', [CheckoutController::class, 'getCheckinDetails']);
+    Route::get('/checkinroomdetails/{checkinId}/{roomId}', [CheckoutController::class, 'getCheckinRoomDetails']);
+
+    Route::post('/clean-room', [RoommenuController::class, 'cleanRoom']);
+    Route::post('/finish-cleaning', [RoommenuController::class, 'finishCleaning']);
+    Route::get('/cleaning-masters', [RoommenuController::class, 'getCleaningMasters']);
+
+    Route::post('/report-maintenance', [RoommenuController::class, 'reportMaintenance']);
+    Route::post('/resolve-maintenance', [RoommenuController::class, 'resolveMaintenance']);
+    Route::get('/maintenance-masters', [RoommenuController::class, 'getMaintenanceMasters']);
+
+    Route::get('/checkin-info', [RoommenuController::class, 'getCheckInInfo']);
+
+
+
     // Logout
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 // Public routes for check-in and room data
-Route::get('/getAllActiveRooms', [DashboardController::class, 'getAllActiveRooms']);
-Route::get('/getArrivalModes', [CheckinController::class, 'getArrivalModes']);
-Route::get('/getAllGender', [CheckinController::class, 'getAllGender']);
-Route::get('/getAllTitleMaster', [CheckinController::class, 'getAllTitleMaster']);
-Route::get('/getAllRoomTypes', [CheckinController::class, 'getAllRoomTypes']);
-Route::get('/getAllSegments', [CheckinController::class, 'getAllSegments']);
-Route::get('/getAllBusinessSources', [CheckinController::class, 'getAllBusinessSources']);
-Route::get('/getRoomsByType/{roomTypeId}', [CheckinController::class, 'getRoomsByType']);
-Route::get('/getRoomTypePlan/{roomTypeId}', [CheckinController::class, 'getRoomTypePlan']);
 
-Route::post('/checkinConfirm', [CheckinController::class, 'checkinConfirm']);
-Route::get('/checkinList', [CheckinController::class, 'checkinList']);
-Route::get('/checkin/{checkinid}', [CheckinController::class, 'checkin']);
-Route::put('/editcheckin/{checkinId}', [CheckinController::class, 'editCheckin']);
-
-Route::get('/checkindetails/{checkinId}', [CheckoutController::class, 'getCheckinDetails']);
-Route::get('/checkinroomdetails/{checkinId}/{roomId}', [CheckoutController::class, 'getCheckinRoomDetails']);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2025 at 02:03 PM
+-- Generation Time: Jun 17, 2025 at 02:42 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -116,7 +116,8 @@ INSERT INTO `block_rooms` (`id`, `room_id`, `status_id`, `reason`, `fromdatetime
 (6, 9, 7, 'Tesing', '2025-06-19 18:30:00', '2025-06-18 18:30:00', 1, '2025-06-12 13:14:01'),
 (7, 10, 7, 'testing', '2025-06-11 18:30:00', '2025-06-13 18:30:00', 1, '2025-06-12 13:15:31'),
 (8, 11, 7, 'Tesing', '2025-06-11 18:30:00', '2025-06-12 18:30:00', 1, '2025-06-12 13:17:52'),
-(9, 14, 7, '1500.00', '2025-06-13 18:30:00', '2025-06-29 18:30:00', 1, '2025-06-14 11:33:19');
+(9, 14, 4, '1500.00', '2025-06-13 18:30:00', '2025-06-29 18:30:00', 1, '2025-06-14 11:33:19'),
+(10, 18, 7, 'None', '2025-06-16 18:30:00', '2025-06-24 18:30:00', 1, '2025-06-17 06:26:14');
 
 -- --------------------------------------------------------
 
@@ -223,7 +224,8 @@ CREATE TABLE `checkin_master` (
 
 INSERT INTO `checkin_master` (`id`, `is_reservation`, `reservation_number`, `arrival_mode`, `ota`, `booking_id`, `contact`, `title`, `first_name`, `last_name`, `gender`, `city`, `id_number`, `email`, `check_in_mode`, `allow_credit`, `foreign_guest`, `segment_id`, `business_source_id`, `photo`, `document`, `gst_number`, `guest_company`, `age`, `gst_type`, `address`, `visit_remark`, `pin_code`, `nationality`, `booking_instructions`, `guest_special_instructions`, `is_vip`, `check_in_type`, `check_in_datetime`, `number_of_days`, `check_out_datetime`, `grace_hours`, `payment_by`, `allow_charges_posting`, `enable_paxwise`, `enable_room_sharing`, `created_at`, `updated_at`) VALUES
 (1, 0, NULL, '1', 'asdfsg', '23456', '12345678', '1', 'kalidass', 'R', '1', 'Chennai', '12345678', 'kalidass@gmail.com', 'Day', 'No', 'No', 2, 4, NULL, NULL, '12345678', 'asdcfvg', 22, 'UNREGISTERED', 'asdcfghj', 'qwertyuio', '123456', 'Indian', 'asdfghj', 'qwertghjk', 1, '24 Hours CheckIn', '2025-06-14 15:30:51', 1, '2025-06-15 15:30:51', 2, 'Direct', 1, 1, 0, '2025-06-14 04:34:36', '2025-06-14 04:34:36'),
-(2, 0, NULL, '2', NULL, NULL, '123456789', '1', 'Dass', 'R', '1', 'Chennai', '1234567890', NULL, 'Day', 'No', 'No', 1, NULL, NULL, NULL, NULL, NULL, NULL, 'UNREGISTERED', NULL, NULL, NULL, 'Indian', NULL, NULL, 1, '24 Hours CheckIn', '2025-06-14 17:01:49', 1, '2025-06-15 17:01:49', 2, 'Direct', 1, 0, 0, '2025-06-14 06:05:59', '2025-06-14 06:05:59');
+(2, 0, NULL, '2', NULL, NULL, '123456789', '1', 'Dass', 'R', '1', 'Chennai', '1234567890', NULL, 'Day', 'No', 'No', 1, NULL, NULL, NULL, NULL, NULL, NULL, 'UNREGISTERED', NULL, NULL, NULL, 'Indian', NULL, NULL, 1, '24 Hours CheckIn', '2025-06-14 17:01:49', 1, '2025-06-15 17:01:49', 2, 'Direct', 1, 0, 0, '2025-06-14 06:05:59', '2025-06-14 06:05:59'),
+(3, 0, NULL, '1', 'qwqwqw', '1212212212', '232323123', '1', 'kalidass', 'r', '1', 'Chennai', '212311213', 'dass@gmai.com', 'Day', 'Yes', 'No', 2, 2, NULL, NULL, 'qwqwwqwdd', 'qwqwqwqw', 21, 'UNREGISTERED', 'sddasad', 'cacacca', '233233', 'Indian', 'dcsfdwsd', 'sdccsdcsdcsdcscdsdc', 1, '24 Hours CheckIn', '2025-06-17 12:49:19', 1, '2025-06-24 12:49:19', 2, 'Direct', 1, 0, 0, '2025-06-17 01:55:25', '2025-06-17 01:55:25');
 
 -- --------------------------------------------------------
 
@@ -255,7 +257,9 @@ CREATE TABLE `checkin_room_trans` (
 --
 
 INSERT INTO `checkin_room_trans` (`id`, `checkin_id`, `room_type_id`, `room_id`, `rate_plan_id`, `guest_name`, `contact`, `male`, `female`, `extra`, `net_rate`, `disc_type`, `disc_val`, `total`, `created_at`, `updated_at`) VALUES
-(3, 2, 3, 5, 1, 'dass', '123456789', 1, 1, 0, 1100.00, 'Percentage', 24.00, 836.00, '2025-06-14 06:05:59', '2025-06-14 06:05:59');
+(3, 2, 3, 5, 1, 'dass', '123456789', 1, 1, 0, 1100.00, 'Percentage', 24.00, 836.00, '2025-06-14 06:05:59', '2025-06-14 06:05:59'),
+(4, 3, 3, 1, 1, 'Alan', '98765245', 2, 0, 1, 1100.00, 'Amount', 100.00, 1000.00, '2025-06-17 01:55:25', '2025-06-17 01:55:25'),
+(5, 3, 4, 6, 4, 'Helan', '12121312', 2, 0, 0, 1500.00, 'Percentage', 50.00, 750.00, '2025-06-17 01:55:25', '2025-06-17 01:55:25');
 
 -- --------------------------------------------------------
 
@@ -350,6 +354,85 @@ INSERT INTO `city_master` (`id`, `state_id`, `city_code`, `city_name`, `descript
 (3, 4, 'CBE', 'Coimbatore', 'Major industrial city', 1, NULL, NULL, '2025-06-07 09:56:10', '2025-06-07 09:56:10', NULL),
 (4, 4, 'TRV', 'Tiruvannamalai', 'City famous for Annamalaiyar Temple', 1, NULL, NULL, '2025-06-07 09:56:10', '2025-06-07 09:56:10', NULL),
 (5, 4, 'TNJ', 'Tanjore', 'City known for Brihadeeswarar Temple', 1, NULL, NULL, '2025-06-07 09:56:10', '2025-06-07 09:56:10', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cleaner_master`
+--
+
+CREATE TABLE `cleaner_master` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(150) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `shift` varchar(50) DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cleaner_master`
+--
+
+INSERT INTO `cleaner_master` (`id`, `name`, `phone`, `shift`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'Rahul Sharma', '9876543210', 'Morning', 1, '2025-06-17 05:15:24', '2025-06-17 05:15:24'),
+(2, 'Anita Verma', '9123456780', 'Evening', 1, '2025-06-17 05:15:24', '2025-06-17 05:15:24'),
+(3, 'Suresh Kumar', '9988776655', 'Night', 1, '2025-06-17 05:15:24', '2025-06-17 05:15:24'),
+(4, 'Meena Joshi', '9090909090', 'Morning', 1, '2025-06-17 05:15:24', '2025-06-17 05:15:24'),
+(5, 'Vikram Patel', '8888888888', 'Evening', 1, '2025-06-17 05:15:24', '2025-06-17 05:15:24');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cleaning_status_master`
+--
+
+CREATE TABLE `cleaning_status_master` (
+  `id` bigint(20) NOT NULL,
+  `status_name` varchar(100) NOT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cleaning_status_master`
+--
+
+INSERT INTO `cleaning_status_master` (`id`, `status_name`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'Pending', 1, '2025-06-17 05:18:23', '2025-06-17 05:18:23'),
+(2, 'In Progress', 1, '2025-06-17 05:18:23', '2025-06-17 05:18:23'),
+(3, 'Completed', 1, '2025-06-17 05:18:23', '2025-06-17 05:18:23'),
+(4, 'Skipped', 1, '2025-06-17 05:18:23', '2025-06-17 05:18:23'),
+(5, 'Delayed', 1, '2025-06-17 05:18:23', '2025-06-17 05:18:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `company_master`
+--
+
+CREATE TABLE `company_master` (
+  `id` bigint(20) NOT NULL,
+  `company_name` varchar(255) NOT NULL,
+  `company_code` varchar(100) NOT NULL,
+  `contact_person` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `gst_number` varchar(50) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `company_master`
+--
+
+INSERT INTO `company_master` (`id`, `company_name`, `company_code`, `contact_person`, `email`, `phone`, `address`, `gst_number`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Reaspberry Hotels Group', 'RHG001', 'Mr. Kalidass', 'info@reaspberryhotels.com', '+91-9876543210', '123 MG Road, Chennai, Tamil Nadu, India', '33ABCDE1234F1Z5', 1, '2025-06-17 11:53:11', '2025-06-17 11:53:11');
 
 -- --------------------------------------------------------
 
@@ -556,6 +639,56 @@ CREATE TABLE `job_batches` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `maintenance_master`
+--
+
+CREATE TABLE `maintenance_master` (
+  `id` bigint(20) NOT NULL,
+  `issue_type` varchar(150) NOT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `maintenance_master`
+--
+
+INSERT INTO `maintenance_master` (`id`, `issue_type`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'AC Problem', 1, '2025-06-17 06:39:28', '2025-06-17 06:39:28'),
+(2, 'Plumbing Issue', 1, '2025-06-17 06:39:28', '2025-06-17 06:39:28'),
+(3, 'Electrical Issue', 1, '2025-06-17 06:39:28', '2025-06-17 06:39:28'),
+(4, 'Furniture Damage', 1, '2025-06-17 06:39:28', '2025-06-17 06:39:28'),
+(5, 'Water Leakage', 1, '2025-06-17 06:39:28', '2025-06-17 06:39:28');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `maintenance_status_master`
+--
+
+CREATE TABLE `maintenance_status_master` (
+  `id` bigint(20) NOT NULL,
+  `status_name` varchar(100) NOT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `maintenance_status_master`
+--
+
+INSERT INTO `maintenance_status_master` (`id`, `status_name`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'Reported', 1, '2025-06-17 06:39:14', '2025-06-17 06:39:14'),
+(2, 'In Progress', 1, '2025-06-17 06:39:14', '2025-06-17 06:39:14'),
+(3, 'On Hold', 1, '2025-06-17 06:39:14', '2025-06-17 06:39:14'),
+(4, 'Resolved', 1, '2025-06-17 06:39:14', '2025-06-17 06:39:14'),
+(5, 'Cancelled', 1, '2025-06-17 06:39:14', '2025-06-17 06:39:14');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -619,7 +752,9 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 (29, 'App\\Models\\User', 1, 'authToken', 'b62eac3e22fff3188615c968a1917b19ad6a9087ec28d2bd8370b3dc885185cc', '[\"*\"]', NULL, NULL, '2025-06-07 05:20:56', '2025-06-07 05:20:56'),
 (31, 'App\\Models\\User', 1, 'authToken', '64905b4d3b0ec5f791754157992bfaa4b6501bc4da8296f0e8204c1407440899', '[\"*\"]', '2025-06-09 07:44:18', NULL, '2025-06-07 06:49:43', '2025-06-09 07:44:18'),
 (37, 'App\\Models\\User', 1, 'authToken', 'd89fa79fc868f14955acc49a2c718f020175fea52b0457a4a6f294d5878ab157', '[\"*\"]', NULL, NULL, '2025-06-11 23:14:47', '2025-06-11 23:14:47'),
-(39, 'App\\Models\\User', 1, 'authToken', 'dea883144134d67fad2dddb81f5b408b78daefd5822f0fd2d09c0144a4f4840a', '[\"*\"]', '2025-06-14 06:32:43', NULL, '2025-06-12 05:54:06', '2025-06-14 06:32:43');
+(42, 'App\\Models\\User', 1, 'authToken', '1f8c85be947214cde0f47128a9a2313990127cd3705dcae2fd2d7e008258c14c', '[\"*\"]', NULL, NULL, '2025-06-17 06:52:28', '2025-06-17 06:52:28'),
+(43, 'App\\Models\\User', 1, 'authToken', 'cf1389fe6addcacf44a81e5f7b18a313c24f1b2cf6b2b128d8dba5353c7b8e5f', '[\"*\"]', NULL, NULL, '2025-06-17 06:59:58', '2025-06-17 06:59:58'),
+(44, 'App\\Models\\User', 1, 'authToken', '40b6bad42a5442ea93fef73da6cd753605201410f29c431fc667536de449a59b', '[\"*\"]', NULL, NULL, '2025-06-17 07:04:55', '2025-06-17 07:04:55');
 
 -- --------------------------------------------------------
 
@@ -661,6 +796,36 @@ INSERT INTO `plans` (`id`, `plan_name`, `description`, `rate_per_day`, `room_typ
 (4, '1500 Premium', 'Premium room plan with all taxes and services', 1500.00, 4, 1, 1, 1, 1, 1, 1, 1, 1, 'Active', 1, 1, NULL, '2025-06-08 04:30:00', '2025-06-08 04:30:00', NULL),
 (5, '700 Economy', 'Economy plan with minimal services', 700.00, 6, 0, 0, 0, 0, 0, 1, 0, 0, 'Active', 1, 1, NULL, '2025-06-08 05:30:00', '2025-06-08 05:30:00', NULL),
 (6, '2000 Deluxe', 'Deluxe plan with luxury tax and full meals', 2000.00, 3, 1, 1, 1, 0, 1, 1, 1, 1, 'Active', 1, 1, NULL, '2025-06-08 06:30:00', '2025-06-08 06:30:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `property_master`
+--
+
+CREATE TABLE `property_master` (
+  `id` bigint(20) NOT NULL,
+  `company_id` bigint(20) NOT NULL,
+  `property_name` varchar(255) NOT NULL,
+  `property_code` varchar(100) NOT NULL,
+  `address` text DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `state` varchar(100) DEFAULT NULL,
+  `country` varchar(100) DEFAULT NULL,
+  `zip_code` varchar(20) DEFAULT NULL,
+  `contact_number` varchar(20) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `property_master`
+--
+
+INSERT INTO `property_master` (`id`, `company_id`, `property_name`, `property_code`, `address`, `city`, `state`, `country`, `zip_code`, `contact_number`, `email`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Reaspberry Grand Hotel', 'RHG-GRAND-CHN', '456 Anna Salai, Chennai, Tamil Nadu, India', 'Chennai', 'Tamil Nadu', 'India', '600002', '+91-9845098450', 'grand@reaspberryhotels.com', 1, '2025-06-17 11:53:30', '2025-06-17 11:53:30');
 
 -- --------------------------------------------------------
 
@@ -735,6 +900,63 @@ INSERT INTO `roomtype_master` (`id`, `room_type_code`, `display_order`, `room_ty
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `room_cleaning_logs`
+--
+
+CREATE TABLE `room_cleaning_logs` (
+  `id` bigint(20) NOT NULL,
+  `room_id` bigint(20) NOT NULL,
+  `cleaner_id` bigint(20) NOT NULL,
+  `status_id` bigint(20) NOT NULL,
+  `remarks` text DEFAULT NULL,
+  `started_at` timestamp NULL DEFAULT NULL,
+  `completed_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `room_cleaning_logs`
+--
+
+INSERT INTO `room_cleaning_logs` (`id`, `room_id`, `cleaner_id`, `status_id`, `remarks`, `started_at`, `completed_at`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 3, 'None', '2025-06-17 00:24:06', '2025-06-17 00:53:36', '2025-06-17 00:24:06', '2025-06-17 00:53:36'),
+(2, 2, 2, 3, 'Completed', '2025-06-17 00:24:58', '2025-06-17 00:24:58', '2025-06-17 00:24:58', '2025-06-17 00:24:58'),
+(3, 5, 3, 2, NULL, '2025-06-17 00:54:32', NULL, '2025-06-17 00:54:32', '2025-06-17 00:54:32'),
+(4, 9, 3, 3, NULL, '2025-06-17 01:40:28', '2025-06-17 01:40:51', '2025-06-17 01:40:28', '2025-06-17 01:40:51'),
+(5, 3, 2, 3, NULL, '2025-06-17 01:45:32', '2025-06-17 01:45:32', '2025-06-17 01:45:32', '2025-06-17 01:45:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `room_maintenance_logs`
+--
+
+CREATE TABLE `room_maintenance_logs` (
+  `id` bigint(20) NOT NULL,
+  `room_id` bigint(20) NOT NULL,
+  `maintenance_type_id` bigint(20) NOT NULL,
+  `maintenance_status_id` bigint(20) NOT NULL,
+  `issue_description` text DEFAULT NULL,
+  `reported_by` bigint(20) DEFAULT NULL,
+  `started_at` timestamp NULL DEFAULT NULL,
+  `resolved_at` timestamp NULL DEFAULT NULL,
+  `remarks` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `room_maintenance_logs`
+--
+
+INSERT INTO `room_maintenance_logs` (`id`, `room_id`, `maintenance_type_id`, `maintenance_status_id`, `issue_description`, `reported_by`, `started_at`, `resolved_at`, `remarks`, `created_at`, `updated_at`) VALUES
+(3, 1, 1, 4, 'None', 1, '2025-06-17 01:35:35', '2025-06-17 01:36:03', NULL, '2025-06-17 01:35:35', '2025-06-17 01:36:03'),
+(4, 9, 4, 4, 'ssdsdsdss', 1, '2025-06-17 01:39:44', '2025-06-17 01:40:05', NULL, '2025-06-17 01:39:44', '2025-06-17 01:40:05');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `room_master`
 --
 
@@ -762,28 +984,28 @@ CREATE TABLE `room_master` (
 --
 
 INSERT INTO `room_master` (`id`, `room_no`, `display_order`, `floor_id`, `room_type_id`, `max_pax`, `max_extra_pax`, `status_id`, `checkin_id`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, '501', 1, 5, 3, 2, 1, 4, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 04:43:07', NULL),
-(2, '502', 2, 5, 4, 2, 1, 4, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 04:46:39', NULL),
-(3, '503', 3, 5, 5, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
-(4, '504', 4, 5, 6, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
-(5, '505', 5, 5, 3, 2, 1, 4, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 06:25:32', NULL),
-(6, '506', 6, 5, 4, 2, 1, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
-(7, '507', 7, 5, 5, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
+(1, '501', 1, 5, 3, 2, 1, 2, 3, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-17 01:55:25', NULL),
+(2, '502', 2, 5, 4, 2, 1, 2, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-17 07:17:39', NULL),
+(3, '503', 3, 5, 5, 3, 2, 3, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-17 07:17:42', NULL),
+(4, '504', 4, 5, 6, 3, 2, 4, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-17 06:11:15', NULL),
+(5, '505', 5, 5, 3, 2, 1, 5, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-17 07:17:46', NULL),
+(6, '506', 6, 5, 4, 2, 1, 2, 3, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-17 01:55:25', NULL),
+(7, '507', 7, 5, 5, 3, 2, 7, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-17 07:17:54', NULL),
 (8, '508', 8, 5, 6, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
-(9, '509', 9, 5, 3, 2, 1, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
+(9, '509', 9, 5, 3, 2, 1, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-17 01:40:51', NULL),
 (10, '510', 10, 5, 4, 2, 1, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
 (11, '601', 11, 6, 5, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
-(12, '602', 12, 6, 6, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
-(13, '603', 13, 6, 3, 2, 1, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
-(14, '604', 14, 6, 4, 2, 1, 7, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 06:03:19', NULL),
+(12, '602', 12, 6, 6, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-17 07:04:12', NULL),
+(13, '603', 13, 6, 3, 2, 1, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-17 07:04:12', NULL),
+(14, '604', 14, 6, 4, 2, 1, 4, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-17 00:55:38', NULL),
 (15, '605', 15, 6, 5, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
 (16, '606', 16, 6, 6, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
-(17, '607', 17, 6, 3, 2, 1, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
-(18, '608', 18, 6, 4, 2, 1, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
+(17, '607', 17, 6, 3, 2, 1, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-17 07:04:12', NULL),
+(18, '608', 18, 6, 4, 2, 1, 7, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-17 00:56:14', NULL),
 (19, '609', 19, 6, 5, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-07 11:23:53', NULL),
 (20, '610', 20, 6, 6, 3, 2, 1, NULL, 1, 101, 101, NULL, '2025-06-07 11:23:53', '2025-06-14 09:58:56', NULL),
 (21, '101', 1, 6, 5, 1, 1, 1, NULL, 1, 1, 1, NULL, '2025-06-07 06:39:35', '2025-06-14 09:58:56', NULL),
-(22, '102', 2, 5, 4, 2, 1, 1, NULL, 1, 1, 1, NULL, '2025-06-07 06:39:56', '2025-06-14 09:58:56', NULL),
+(22, '102', 2, 5, 4, 2, 1, 1, NULL, 1, 1, 1, NULL, '2025-06-07 06:39:56', '2025-06-17 07:04:12', NULL),
 (23, '104', 3, 6, 6, 2, 1, 1, NULL, 1, 1, 1, NULL, '2025-06-07 06:40:13', '2025-06-14 09:58:56', NULL),
 (24, '106', 1, 6, 4, 1, 2, 1, NULL, 1, 1, 1, NULL, '2025-06-07 06:40:37', '2025-06-14 09:58:56', NULL);
 
@@ -996,6 +1218,26 @@ ALTER TABLE `city_master`
   ADD KEY `fk_state` (`state_id`);
 
 --
+-- Indexes for table `cleaner_master`
+--
+ALTER TABLE `cleaner_master`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cleaning_status_master`
+--
+ALTER TABLE `cleaning_status_master`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `status_name` (`status_name`);
+
+--
+-- Indexes for table `company_master`
+--
+ALTER TABLE `company_master`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `company_code` (`company_code`);
+
+--
 -- Indexes for table `country_master`
 --
 ALTER TABLE `country_master`
@@ -1052,6 +1294,20 @@ ALTER TABLE `job_batches`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `maintenance_master`
+--
+ALTER TABLE `maintenance_master`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `issue_type` (`issue_type`);
+
+--
+-- Indexes for table `maintenance_status_master`
+--
+ALTER TABLE `maintenance_status_master`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `status_name` (`status_name`);
+
+--
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -1078,6 +1334,14 @@ ALTER TABLE `plans`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `property_master`
+--
+ALTER TABLE `property_master`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `property_code` (`property_code`),
+  ADD KEY `fk_company` (`company_id`);
+
+--
 -- Indexes for table `roomstatus_master`
 --
 ALTER TABLE `roomstatus_master`
@@ -1087,6 +1351,18 @@ ALTER TABLE `roomstatus_master`
 -- Indexes for table `roomtype_master`
 --
 ALTER TABLE `roomtype_master`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `room_cleaning_logs`
+--
+ALTER TABLE `room_cleaning_logs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `room_maintenance_logs`
+--
+ALTER TABLE `room_maintenance_logs`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1153,7 +1429,7 @@ ALTER TABLE `block_master`
 -- AUTO_INCREMENT for table `block_rooms`
 --
 ALTER TABLE `block_rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `business_source`
@@ -1165,13 +1441,13 @@ ALTER TABLE `business_source`
 -- AUTO_INCREMENT for table `checkin_master`
 --
 ALTER TABLE `checkin_master`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `checkin_room_trans`
 --
 ALTER TABLE `checkin_room_trans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `checkout_master`
@@ -1190,6 +1466,24 @@ ALTER TABLE `checkout_payments`
 --
 ALTER TABLE `city_master`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `cleaner_master`
+--
+ALTER TABLE `cleaner_master`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `cleaning_status_master`
+--
+ALTER TABLE `cleaning_status_master`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `company_master`
+--
+ALTER TABLE `company_master`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `country_master`
@@ -1234,6 +1528,18 @@ ALTER TABLE `jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `maintenance_master`
+--
+ALTER TABLE `maintenance_master`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `maintenance_status_master`
+--
+ALTER TABLE `maintenance_status_master`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -1243,13 +1549,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `plans`
 --
 ALTER TABLE `plans`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `property_master`
+--
+ALTER TABLE `property_master`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `roomstatus_master`
@@ -1262,6 +1574,18 @@ ALTER TABLE `roomstatus_master`
 --
 ALTER TABLE `roomtype_master`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `room_cleaning_logs`
+--
+ALTER TABLE `room_cleaning_logs`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `room_maintenance_logs`
+--
+ALTER TABLE `room_maintenance_logs`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `room_master`
@@ -1314,6 +1638,12 @@ ALTER TABLE `city_master`
 --
 ALTER TABLE `floor_master`
   ADD CONSTRAINT `floor_master_ibfk_1` FOREIGN KEY (`block_id`) REFERENCES `block_master` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `property_master`
+--
+ALTER TABLE `property_master`
+  ADD CONSTRAINT `fk_company` FOREIGN KEY (`company_id`) REFERENCES `company_master` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `room_master`
