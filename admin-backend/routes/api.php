@@ -15,13 +15,9 @@ use App\Http\Controllers\NonRevenueController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// Routes protected by sanctum auth
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
 
-    // BlockMaster routes
+Route::middleware(['auth:sanctum', \App\Http\Middleware\SetTenantDatabase::class])->group(function () {
+// BlockMaster routes
     Route::get('/blockmaster', [MasterController::class, 'blockmaster']);
     Route::post('/blockmaster', [MasterController::class, 'addblockmaster']);
     Route::put('/blockmaster/{id}', [MasterController::class, 'editblockmaster']);
@@ -96,6 +92,14 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/checkin-info', [RoommenuController::class, 'getCheckInInfo']);
 
+});
+// Routes protected by sanctum auth
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    
 
 
     // Logout

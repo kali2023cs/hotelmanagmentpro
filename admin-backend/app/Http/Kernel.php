@@ -40,7 +40,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-             EnsureFrontendRequestsAreStateful::class,
+            //  EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
@@ -68,11 +68,13 @@ class Kernel extends HttpKernel
         'roles' => \Spatie\Permission\Middleware\RoleMiddleware::class,
         'permissions' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
         'cors' => \App\Http\Middleware\Cors::class,
+        // 'tenant.database' => \App\Http\Middleware\SetTenantDatabase::class,
     ];
 
     protected $routeMiddleware = [
         'cors' => \App\Http\Middleware\Cors::class,
         'roles' => \Spatie\Permission\Middleware\RoleMiddleware::class,
         'permissions' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+        'set.tenant.db' => \App\Http\Middleware\SetTenantDatabase::class,
     ];
 }
