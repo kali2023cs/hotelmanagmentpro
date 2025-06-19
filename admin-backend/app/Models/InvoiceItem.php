@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class InvoiceItem extends Model
 {
+    protected $connection = 'mysql2';
     protected $table = 'invoice_items';
     
     protected $fillable = [

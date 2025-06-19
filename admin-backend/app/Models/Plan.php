@@ -9,6 +9,7 @@ class Plan extends Model
 {
     use SoftDeletes;
 
+    protected $connection = 'mysql2';
     protected $table = 'plans';
 
     protected $fillable = [

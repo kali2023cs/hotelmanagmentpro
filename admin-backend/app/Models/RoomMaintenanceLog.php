@@ -9,6 +9,7 @@ class RoomMaintenanceLog extends Model
 {
     use HasFactory;
 
+    protected $connection = 'mysql2';
     protected $table = 'room_maintenance_logs';
     protected $primaryKey = 'id';
 

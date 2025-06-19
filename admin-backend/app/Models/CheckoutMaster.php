@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CheckoutMaster extends Model
 {
+    protected $connection = 'mysql2';
     protected $table = 'checkout_master';
     
     protected $fillable = [

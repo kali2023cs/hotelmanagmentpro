@@ -10,6 +10,7 @@ use App\Http\Controllers\RoommenuController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\NonRevenueController;
+use App\Http\Controllers\MenuController;
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -17,9 +18,11 @@ Route::post('/login', [AuthController::class, 'login']);
 
 
 Route::middleware(['auth:sanctum', \App\Http\Middleware\SetTenantDatabase::class])->group(function () {
+
+    Route::get('/menu', [MenuController::class, 'index']);
 // BlockMaster routes
     Route::get('/blockmaster', [MasterController::class, 'blockmaster']);
-    Route::post('/blockmaster', [MasterController::class, 'addblockmaster']);
+    Route::post('/addblockmaster', [MasterController::class, 'addblockmaster']);
     Route::put('/blockmaster/{id}', [MasterController::class, 'editblockmaster']);
     Route::delete('/blockmaster/{id}', [MasterController::class, 'deleteBlockMaster']);
 
@@ -95,13 +98,7 @@ Route::middleware(['auth:sanctum', \App\Http\Middleware\SetTenantDatabase::class
 });
 // Routes protected by sanctum auth
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-
-    
-
-
+    Route::get('/user', [AuthController::class, 'user']);
     // Logout
     Route::post('/logout', [AuthController::class, 'logout']);
 });

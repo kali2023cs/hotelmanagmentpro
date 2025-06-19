@@ -9,6 +9,7 @@ class RoomMaster extends Model
 {
     use SoftDeletes;
 
+    protected $connection = 'mysql2';
     protected $table = 'room_master';
 
     protected $fillable = [

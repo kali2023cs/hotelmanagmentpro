@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class BlockMaster extends Model
 {
     use SoftDeletes;
-
+    
+    protected $connection = 'mysql2';
     protected $table = 'block_master';
 
     protected $fillable = [

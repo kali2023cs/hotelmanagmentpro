@@ -19,18 +19,17 @@ class DashboardController extends Controller
 {
     public function getAllActiveRooms(Request $request)
     {
-        $rooms = DB::connection('mysql2')->table('room_master as rm')
-        ->join('floor_master as fm', 'rm.floor_id', '=', 'fm.id')
-        ->join('roomtype_master as rtm', 'rm.room_type_id', '=', 'rtm.id')
-        ->join('roomstatus_master as rsm', 'rm.status_id', '=', 'rsm.id')
+        $rooms = RoomMaster::join('floor_master as fm', 'room_master.floor_id', '=', 'fm.id')
+        ->join('roomtype_master as rtm', 'room_master.room_type_id', '=', 'rtm.id')
+        ->join('roomstatus_master as rsm', 'room_master.status_id', '=', 'rsm.id')
         ->select(
-            'rm.*',
+            'room_master.*',
             'fm.floor_name',
             'rtm.room_type_name',
             'rsm.status_name',
             'rsm.color_code'
         )
-        ->where('rm.is_active', 1)
+        ->where('room_master.is_active', 1)
         ->get();
 
         return response()->json([

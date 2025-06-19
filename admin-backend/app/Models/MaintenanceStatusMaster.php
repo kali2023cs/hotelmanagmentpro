@@ -9,6 +9,7 @@ class MaintenanceStatusMaster extends Model
 {
     use HasFactory;
 
+    protected $connection = 'mysql2';
     protected $table = 'maintenance_status_master';
     protected $primaryKey = 'id';
 

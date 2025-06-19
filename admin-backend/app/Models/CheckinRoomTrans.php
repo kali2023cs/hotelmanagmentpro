@@ -9,6 +9,7 @@ class CheckinRoomTrans extends Model
 {
     use HasFactory;
 
+    protected $connection = 'mysql2';
     protected $table = 'checkin_room_trans';
 
     protected $fillable = [

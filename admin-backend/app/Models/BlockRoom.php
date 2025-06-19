@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class BlockRoom extends Model
 {
     use HasFactory;
-
+    
+    protected $connection = 'mysql2';
     protected $table = 'block_rooms';
 
     protected $primaryKey = 'id';

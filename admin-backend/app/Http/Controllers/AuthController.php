@@ -36,47 +36,76 @@ class AuthController extends Controller
         ], 201);
     }
 
-public function login(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-        'property_code' => 'required|string|min:3',
-    ]);
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+            'property_code' => 'required|string|min:3',
+        ]);
 
-    // Set tenant DB
-    $databaseName = 'property_' . $request->property_code;
-    config(['database.connections.mysql2.database' => $databaseName]);
-    DB::purge('mysql2');
-    DB::reconnect('mysql2');
+        // First get the user with password for authentication
+        $authUser = \DB::connection('mysql')
+            ->table('users')
+            ->where('email', $request->email)
+            ->select('users.*') // Include all user fields including password
+            ->first();
 
-    // Fetch user from tenant DB
-    $user = \App\Models\User::on('mysql2')->where('email', $request->email)->first();
+        if (!$authUser || !Hash::check($request->password, $authUser->password)) {
+            return response()->json(['message' => 'Invalid credentials'], 401);
+        }
 
-    if (!$user || !Hash::check($request->password, $user->password)) {
-        return response()->json(['message' => 'Invalid credentials'], 401);
+        // Now get the full user details with joins
+        $user = \DB::connection('mysql')
+            ->table('users')
+            ->leftJoin('company_master', 'users.cmp_id', '=', 'company_master.id')
+            ->leftJoin('property_master', 'users.prop_id', '=', 'property_master.id')
+            ->leftJoin('roles_master', 'users.role_id', '=', 'roles_master.id')
+            ->where('users.email', $request->email)
+            ->select(
+                'users.id', // Important for tokenable_id
+                'users.cmp_id',
+                'users.prop_id',
+                'users.role_id',
+                'users.name as user_name',
+                'users.email as user_email',
+                'company_master.company_name',
+                'company_master.company_code',
+                'property_master.property_name',
+                'property_master.property_code',
+                'property_master.city',
+                'property_master.contact_number',
+                'roles_master.role_name'
+            )
+            ->first();
+        if($request->property_code != $user->property_code ){
+            return response()->json(['message' => 'Invalid Property Code'], 401);
+        }
+
+        $databaseName = 'property_' . $request->property_code;
+        config(['database.connections.mysql2.database' => $databaseName]);
+        DB::purge('mysql2');
+        DB::reconnect('mysql2');
+
+        $plainToken = Str::random(60);
+        $hashedToken = hash('sha256', $plainToken);
+
+        DB::connection('mysql')->table('personal_access_tokens')->insert([
+            'tokenable_type' => 'App\Models\User', // Use the actual User model class
+            'tokenable_id' => $authUser->id,
+            'name' => 'auth_token',
+            'token' => $hashedToken,
+            'abilities' => json_encode(['*']),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return response()->json([
+            'user' => $user,
+            'token' => $plainToken,
+            'property_code' => $request->property_code,
+        ]);
     }
-
-    // Create Sanctum token manually
-    $plainToken = Str::random(60);
-    $hashedToken = hash('sha256', $plainToken);
-
-    DB::connection('mysql')->table('personal_access_tokens')->insert([
-        'tokenable_type' => get_class($user), // Usually 'App\Models\User'
-        'tokenable_id' => $user->id,
-        'name' => 'auth_token',
-        'token' => $hashedToken,
-        'abilities' => json_encode(['*']),
-        'created_at' => now(),
-        'updated_at' => now(),
-    ]);
-
-    return response()->json([
-        'user' => $user,
-        'token' => $plainToken,
-        'property_code' => $request->property_code,
-    ]);
-}
 
 
 
@@ -89,6 +118,30 @@ public function login(Request $request)
 
     public function user(Request $request)
     {
-        return response()->json($request->user());
+        $token = $request->user()->currentAccessToken();
+        
+        $user = \DB::connection('mysql')
+            ->table('users')
+            ->leftJoin('company_master', 'users.cmp_id', '=', 'company_master.id')
+            ->leftJoin('property_master', 'users.prop_id', '=', 'property_master.id')
+            ->leftJoin('roles_master', 'users.role_id', '=', 'roles_master.id')
+            ->where('users.id', $request->user()->id)
+            ->select(
+                'users.id',
+                'users.cmp_id',
+                'users.prop_id',
+                'users.role_id',
+                'users.name as user_name',
+                'users.email as user_email',
+                'company_master.company_name',
+                'company_master.company_code',
+                'property_master.property_name',
+                'property_master.property_code',
+                'property_master.city',
+                'property_master.contact_number',
+                'roles_master.role_name'
+            )
+            ->first();
+        return response()->json($user);
     }
 }

@@ -9,6 +9,7 @@ class CleanerMaster extends Model
 {
     use HasFactory;
 
+    protected $connection = 'mysql2';
     protected $table = 'cleaner_master';
 
     protected $fillable = [

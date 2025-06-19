@@ -113,7 +113,7 @@ class MasterController extends Controller
         $validated = $request->validate([
             'floor_no' => 'required|string|max:255',
             'floor_name' => 'required|string|max:255',
-            'block_id' => 'required|exists:block_master,id',
+            'block_id' => 'required|exists:mysql2.block_master,id',
         ]);
 
         $floor = new FloorMaster();
@@ -141,7 +141,7 @@ class MasterController extends Controller
         $validated = $request->validate([
             'floor_no' => 'required|string|max:255',
             'floor_name' => 'required|string|max:255',
-            'block_id' => 'required|exists:block_master,id',
+            'block_id' => 'required|exists:mysql2.block_master,id',
         ]);
 
         $floor->floor_no = $validated['floor_no'];
@@ -205,7 +205,7 @@ class MasterController extends Controller
         $validated = $request->validate([
             'room_type_code' => 'required|string|max:10',
             'room_type_name' => 'required|string|max:100',
-            'default_plan_id' => 'nullable|exists:plans,id',
+            'default_plan_id' => 'nullable|exists:mysql2.plans,id',
             'display_order' => 'nullable|integer',
             'wifi_plan_id' => 'nullable|integer',
             'max_adult_pax' => 'nullable|integer',
@@ -233,7 +233,7 @@ class MasterController extends Controller
         $validated = $request->validate([
             'room_type_code' => 'required|string|max:10',
             'room_type_name' => 'required|string|max:100',
-            'default_plan_id' => 'nullable|exists:plans,id',
+            'default_plan_id' => 'nullable|exists:mysql2.plans,id',
             'display_order' => 'nullable|integer',
             'wifi_plan_id' => 'nullable|integer',
             'max_adult_pax' => 'nullable|integer',
@@ -294,16 +294,17 @@ class MasterController extends Controller
 
     public function addroommaster(Request $request)
     {
-        $validated = $request->validate([
-            'room_no' => 'required|string|max:10|unique:room_master,room_no',
+         $validated = $request->validate([
+            'room_no' => 'required|string|max:10|unique:mysql2.room_master,room_no',
             'display_order' => 'required|integer',
-            'floor_id' => 'required|exists:floor_master,id',
-            'room_type_id' => 'required|exists:roomtype_master,id',
-            'status_id' => 'required|exists:roomstatus_master,id',
+            'floor_id' => 'required|exists:mysql2.floor_master,id',
+            'room_type_id' => 'required|exists:mysql2.roomtype_master,id',
+            'status_id' => 'required|exists:mysql2.roomstatus_master,id',
             'max_pax' => 'required|integer|min:0',
             'max_extra_pax' => 'required|integer|min:0',
             'is_active' => 'required|boolean',
         ]);
+
 
         $room = RoomMaster::create(array_merge($validated, [
             'created_by' => $request->user()->id,
@@ -324,11 +325,11 @@ class MasterController extends Controller
         }
 
         $validated = $request->validate([
-            'room_no' => 'required|string|max:10|unique:room_master,room_no,'.$id,
+            'room_no' => 'required|string|max:10|unique:mysql2.room_master,room_no,'.$id,
             'display_order' => 'required|integer',
-            'floor_id' => 'required|exists:floor_master,id',
-            'room_type_id' => 'required|exists:roomtype_master,id',
-            'status_id' => 'required|exists:roomstatus_master,id',
+            'floor_id' => 'required|exists:mysql2.floor_master,id',
+            'room_type_id' => 'required|exists:mysql2.roomtype_master,id',
+            'status_id' => 'required|exists:mysql2.roomstatus_master,id',
             'max_pax' => 'required|integer|min:0',
             'max_extra_pax' => 'required|integer|min:0',
             'is_active' => 'required|boolean',

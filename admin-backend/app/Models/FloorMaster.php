@@ -9,6 +9,7 @@ class FloorMaster extends Model
 {
     use SoftDeletes;
 
+    protected $connection = 'mysql2';
     protected $table = 'floor_master';
 
     protected $fillable = [

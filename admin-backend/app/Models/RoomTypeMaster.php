@@ -11,6 +11,7 @@ class RoomTypeMaster extends Model
 
     protected $table = 'roomtype_master';
 
+    protected $connection = 'mysql2';
     protected $fillable = [
         'room_type_code',
         'room_type_name',
